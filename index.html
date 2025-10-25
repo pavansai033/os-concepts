@@ -212,6 +212,57 @@
             color: #2d3748;
         }
 
+        .detailed-explanation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #007bff;
+        }
+
+        .detailed-explanation h4 {
+            color: #2c7a7b;
+            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .detailed-explanation h5 {
+            color: #4a5568;
+            margin: 15px 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 10px 0;
+            white-space: pre;
+        }
+
+        .detailed-explanation ul {
+            margin: 10px 0 10px 20px;
+        }
+
+        .detailed-explanation ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        .detailed-explanation li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .detailed-explanation p {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
         .timeline {
             display: flex;
             align-items: center;
@@ -254,7 +305,10 @@
     <div class="container">
         <div class="header">
             <h1>🖥️ Operating Systems Concepts</h1>
-            <p>Interactive Visual Guide to Core OS Topics</p>
+            <p>Comprehensive Interactive Guide to Core OS Topics</p>
+            <p style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">
+                Deep dive into OS fundamentals with detailed explanations, examples, and visual aids
+            </p>
         </div>
 
         <div class="categories">
@@ -315,65 +369,260 @@
     <div id="process-management" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('process-management')">&times;</span>
-            <h2>⚙️ Process Management</h2>
+            <h2>⚙️ Process Management - Comprehensive Guide</h2>
             
             <div class="concept-diagram">
-                <div class="diagram-title">Process Concept</div>
-                <div class="visual-element">
-                    <div class="process-box">Program</div>
-                    <span class="arrow">→</span>
-                    <div class="process-box">Process</div>
-                    <span class="arrow">→</span>
-                    <div class="process-box">Execution</div>
+                <div class="diagram-title">1. Process Concept - What is a Process?</div>
+                <div class="detailed-explanation">
+                    <p><strong>Definition:</strong> A process is a program in execution. It's more than just code - it includes the current activity, program counter, stack, data section, and heap.</p>
+                    
+                    <h4>🏗️ Process Structure in Memory:</h4>
+                    <pre class="code-block">
+┌─────────────────┐ ← High Memory
+│      Stack      │ (Local variables, function calls)
+│        ↓        │ (Grows downward)
+├─────────────────┤
+│                 │ (Free space)
+│        ↑        │ (Grows upward)
+│      Heap       │ (Dynamic memory allocation)
+├─────────────────┤
+│   Data Section  │ (Global & static variables)
+├─────────────────┤
+│   Text Section  │ (Program code)
+└─────────────────┘ ← Low Memory
+                    </pre>
+                    
+                    <h4>🔄 Program vs Process:</h4>
+                    <ul>
+                        <li><strong>Program:</strong> Passive entity (executable file on disk)</li>
+                        <li><strong>Process:</strong> Active entity (program loaded in memory and executing)</li>
+                        <li><strong>Example:</strong> notepad.exe (program) → Running Notepad window (process)</li>
+                    </ul>
                 </div>
-                <p><strong>Process:</strong> A program in execution with its own memory space, registers, and program counter.</p>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Process States</div>
-                <div class="visual-element">
-                    <div class="process-box" style="background: #28a745;">New</div>
-                    <span class="arrow">→</span>
-                    <div class="process-box" style="background: #ffc107;">Ready</div>
-                    <span class="arrow">→</span>
-                    <div class="process-box" style="background: #dc3545;">Running</div>
-                    <span class="arrow">→</span>
-                    <div class="process-box" style="background: #6c757d;">Terminated</div>
-                </div>
-                <div class="visual-element">
-                    <div class="process-box" style="background: #17a2b8;">Waiting/Blocked</div>
-                </div>
-            </div>
-
-            <div class="concept-diagram">
-                <div class="diagram-title">System Calls</div>
-                <div class="algorithm-steps">
-                    <h4>Types of System Calls:</h4>
+                <div class="diagram-title">2. Process States - The Process Lifecycle</div>
+                <div class="detailed-explanation">
+                    <h4>🔄 State Transition Diagram:</h4>
+                    <pre class="code-block">
+    NEW ──────→ READY ──────→ RUNNING
+     │            ↑              │
+     │            │              ↓
+     │            │         WAITING/BLOCKED
+     │            │              │
+     │            └──────────────┘
+     │                           │
+     └─────────→ TERMINATED ←────┘
+                    </pre>
+                    
+                    <h4>📋 Detailed State Descriptions:</h4>
+                    <ul>
+                        <li><strong>NEW:</strong> Process is being created, PCB allocated</li>
+                        <li><strong>READY:</strong> Process loaded in memory, waiting for CPU</li>
+                        <li><strong>RUNNING:</strong> Process is currently executing on CPU</li>
+                        <li><strong>WAITING/BLOCKED:</strong> Process waiting for I/O or event</li>
+                        <li><strong>TERMINATED:</strong> Process finished execution, resources being freed</li>
+                    </ul>
+                    
+                    <h4>🎯 Real-world Example:</h4>
+                    <p><strong>Opening a Word Document:</strong></p>
                     <ol>
-                        <li><strong>Process Control:</strong> fork(), exec(), wait(), exit()</li>
-                        <li><strong>File Management:</strong> open(), read(), write(), close()</li>
-                        <li><strong>Device Management:</strong> ioctl(), read(), write()</li>
-                        <li><strong>Information Maintenance:</strong> getpid(), alarm(), sleep()</li>
-                        <li><strong>Communication:</strong> pipe(), shmget(), mmap()</li>
+                        <li><strong>NEW:</strong> Double-click Word icon → OS creates process</li>
+                        <li><strong>READY:</strong> Word loaded in memory, waiting for CPU time</li>
+                        <li><strong>RUNNING:</strong> Word interface appears, you can type</li>
+                        <li><strong>BLOCKED:</strong> Saving file → waiting for disk I/O</li>
+                        <li><strong>READY:</strong> Save complete → ready to run again</li>
+                        <li><strong>TERMINATED:</strong> Close Word → process ends</li>
                     </ol>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Inter Process Communication (IPC)</div>
-                <div class="visual-element">
-                    <div class="process-box">Process A</div>
-                    <span class="arrow">⟷</span>
-                    <div class="memory-block">Shared Memory</div>
-                    <span class="arrow">⟷</span>
-                    <div class="process-box">Process B</div>
+                <div class="diagram-title">3. System Calls - Gateway to OS Services</div>
+                <div class="detailed-explanation">
+                    <p><strong>Definition:</strong> System calls provide interface between user programs and OS kernel services.</p>
+                    
+                    <h4>🔧 System Call Mechanism:</h4>
+                    <pre class="code-block">
+User Program
+     │ (Library call: printf())
+     ↓
+Standard Library
+     │ (System call: write())
+     ↓
+Kernel Mode ←─── Trap/Interrupt
+     │
+OS Kernel
+     │ (Execute system call)
+     ↓
+Hardware
+                    </pre>
+                    
+                    <h4>📚 Categories with Examples:</h4>
+                    
+                    <h5>1️⃣ Process Control:</h5>
+                    <ul>
+                        <li><strong>fork():</strong> Create child process</li>
+                        <li><strong>exec():</strong> Replace process image</li>
+                        <li><strong>wait():</strong> Wait for child process</li>
+                        <li><strong>exit():</strong> Terminate process</li>
+                    </ul>
+                    
+                    <h5>2️⃣ File Management:</h5>
+                    <ul>
+                        <li><strong>open():</strong> Open file for reading/writing</li>
+                        <li><strong>read():</strong> Read data from file</li>
+                        <li><strong>write():</strong> Write data to file</li>
+                        <li><strong>close():</strong> Close file descriptor</li>
+                    </ul>
+                    
+                    <h5>3️⃣ Device Management:</h5>
+                    <ul>
+                        <li><strong>ioctl():</strong> Device-specific operations</li>
+                        <li><strong>mount():</strong> Mount file system</li>
+                        <li><strong>umount():</strong> Unmount file system</li>
+                    </ul>
+                    
+                    <h4>💻 Code Example (C):</h4>
+                    <pre class="code-block">
+#include &lt;unistd.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main() {
+    pid_t pid = fork();  // System call to create child
+    
+    if (pid == 0) {
+        // Child process
+        execl("/bin/ls", "ls", "-l", NULL);  // Replace with ls
+    } else {
+        // Parent process
+        wait(NULL);  // Wait for child to complete
+        printf("Child process finished\n");
+    }
+    return 0;
+}
+                    </pre>
                 </div>
-                <div class="visual-element">
-                    <div class="process-box">Process C</div>
-                    <span class="arrow">→</span>
-                    <div class="file-block">Message Queue</div>
-                    <span class="arrow">→</span>
-                    <div class="process-box">Process D</div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">4. Inter Process Communication (IPC)</div>
+                <div class="detailed-explanation">
+                    <p><strong>Why IPC?</strong> Processes need to communicate and synchronize for cooperation and data sharing.</p>
+                    
+                    <h4>🔄 IPC Mechanisms:</h4>
+                    
+                    <h5>1️⃣ Shared Memory:</h5>
+                    <pre class="code-block">
+Process A                    Process B
+    │                           │
+    ↓                           ↓
+┌─────────┐                ┌─────────┐
+│ Memory  │ ←── Shared ──→ │ Memory  │
+│ Space   │     Region     │ Space   │
+└─────────┘                └─────────┘
+                    </pre>
+                    <p><strong>Advantages:</strong> Fast, efficient for large data</p>
+                    <p><strong>Disadvantages:</strong> Synchronization issues, complex</p>
+                    
+                    <h5>2️⃣ Message Passing:</h5>
+                    <pre class="code-block">
+Process A ──→ [Message Queue] ──→ Process B
+Process C ──→ [    Kernel    ] ──→ Process D
+                    </pre>
+                    <p><strong>Advantages:</strong> No synchronization issues, works across networks</p>
+                    <p><strong>Disadvantages:</strong> Slower due to kernel involvement</p>
+                    
+                    <h5>3️⃣ Pipes:</h5>
+                    <pre class="code-block">
+# Anonymous Pipe (Parent-Child)
+Parent ──→ [Pipe] ──→ Child
+
+# Named Pipe (FIFO)
+Process A ──→ [Named Pipe] ──→ Process B
+                    </pre>
+                    
+                    <h5>4️⃣ Sockets:</h5>
+                    <pre class="code-block">
+Client Process ←──→ [Socket] ←──→ Server Process
+   (Local)                         (Remote)
+                    </pre>
+                    
+                    <h4>🎯 Real-world Examples:</h4>
+                    <ul>
+                        <li><strong>Browser & Plugins:</strong> Shared memory for fast rendering</li>
+                        <li><strong>Email Client:</strong> Message queues for sending emails</li>
+                        <li><strong>Shell Commands:</strong> Pipes (ls | grep .txt)</li>
+                        <li><strong>Web Services:</strong> Sockets for client-server communication</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">5. Multi-Threading - Lightweight Processes</div>
+                <div class="detailed-explanation">
+                    <p><strong>Thread:</strong> Lightweight process that shares memory space with other threads in the same process.</p>
+                    
+                    <h4>🧵 Process vs Thread:</h4>
+                    <pre class="code-block">
+PROCESS                    THREAD
+┌─────────────────┐       ┌─────────────────┐
+│     Stack       │       │   Thread 1      │
+├─────────────────┤       │   Stack         │
+│     Heap        │       ├─────────────────┤
+├─────────────────┤  ←──→ │   Thread 2      │
+│   Data Section  │       │   Stack         │
+├─────────────────┤       ├─────────────────┤
+│  Text Section   │       │   Shared        │
+└─────────────────┘       │   Heap & Data   │
+                          └─────────────────┘
+                    </pre>
+                    
+                    <h4>🎯 Thread Benefits:</h4>
+                    <ul>
+                        <li><strong>Responsiveness:</strong> UI remains responsive during background tasks</li>
+                        <li><strong>Resource Sharing:</strong> Threads share memory, files, code</li>
+                        <li><strong>Economy:</strong> Creating threads is cheaper than processes</li>
+                        <li><strong>Scalability:</strong> Utilize multiple CPU cores</li>
+                    </ul>
+                    
+                    <h4>🔄 Thread Types:</h4>
+                    <ul>
+                        <li><strong>User Threads:</strong> Managed by thread library (faster)</li>
+                        <li><strong>Kernel Threads:</strong> Managed by OS (more features)</li>
+                        <li><strong>Hybrid:</strong> Combination of both approaches</li>
+                    </ul>
+                    
+                    <h4>💻 Threading Example (Java):</h4>
+                    <pre class="code-block">
+class DownloadThread extends Thread {
+    public void run() {
+        // Download file in background
+        downloadFile("large_file.zip");
+    }
+}
+
+class UIThread extends Thread {
+    public void run() {
+        // Keep UI responsive
+        updateProgressBar();
+    }
+}
+
+// Main application
+DownloadThread downloader = new DownloadThread();
+UIThread ui = new UIThread();
+downloader.start();  // Start background download
+ui.start();          // Keep UI active
+                    </pre>
+                    
+                    <h4>⚠️ Threading Challenges:</h4>
+                    <ul>
+                        <li><strong>Race Conditions:</strong> Multiple threads accessing shared data</li>
+                        <li><strong>Deadlocks:</strong> Threads waiting for each other</li>
+                        <li><strong>Synchronization:</strong> Coordinating thread execution</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -382,81 +631,404 @@
     <div id="cpu-scheduling" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('cpu-scheduling')">&times;</span>
-            <h2>📊 CPU Scheduling Algorithms</h2>
+            <h2>📊 CPU Scheduling Algorithms - Complete Guide</h2>
             
             <div class="concept-diagram">
-                <div class="diagram-title">First Come First Serve (FCFS)</div>
-                <div class="algorithm-steps">
-                    <h4>Algorithm:</h4>
-                    <ol>
-                        <li>Processes are executed in the order they arrive</li>
-                        <li>Non-preemptive scheduling</li>
-                        <li>Simple but can cause convoy effect</li>
-                    </ol>
-                </div>
-                <div class="timeline">
-                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
-                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
-                    <div class="time-slot" style="background: #4ecdc4;">P2</div>
-                    <div class="time-slot" style="background: #45b7d1;">P3</div>
-                    <div class="time-slot" style="background: #45b7d1;">P3</div>
-                </div>
-            </div>
-
-            <div class="concept-diagram">
-                <div class="diagram-title">Shortest Job First (SJF)</div>
-                <div class="algorithm-steps">
-                    <h4>Algorithm:</h4>
-                    <ol>
-                        <li>Select process with shortest burst time</li>
-                        <li>Optimal for average waiting time</li>
-                        <li>Can be preemptive (SRTF) or non-preemptive</li>
-                    </ol>
-                </div>
-                <div class="timeline">
-                    <div class="time-slot" style="background: #4ecdc4;">P2</div>
-                    <div class="time-slot" style="background: #45b7d1;">P3</div>
-                    <div class="time-slot" style="background: #45b7d1;">P3</div>
-                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
-                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
+                <div class="diagram-title">CPU Scheduling Introduction</div>
+                <div class="detailed-explanation">
+                    <p><strong>Purpose:</strong> CPU scheduling determines which process gets CPU time and for how long, maximizing CPU utilization and system throughput.</p>
+                    
+                    <h4>🎯 Scheduling Criteria:</h4>
+                    <ul>
+                        <li><strong>CPU Utilization:</strong> Keep CPU busy (40-90%)</li>
+                        <li><strong>Throughput:</strong> Number of processes completed per time unit</li>
+                        <li><strong>Turnaround Time:</strong> Time from submission to completion</li>
+                        <li><strong>Waiting Time:</strong> Time spent in ready queue</li>
+                        <li><strong>Response Time:</strong> Time from request to first response</li>
+                    </ul>
+                    
+                    <h4>🔄 Preemptive vs Non-Preemptive:</h4>
+                    <ul>
+                        <li><strong>Preemptive:</strong> OS can interrupt running process</li>
+                        <li><strong>Non-Preemptive:</strong> Process runs until completion or blocks</li>
+                    </ul>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Round Robin (RR)</div>
-                <div class="algorithm-steps">
-                    <h4>Algorithm:</h4>
-                    <ol>
-                        <li>Each process gets a fixed time quantum</li>
-                        <li>Preemptive scheduling</li>
+                <div class="diagram-title">1. First Come First Serve (FCFS)</div>
+                <div class="detailed-explanation">
+                    <p><strong>Algorithm:</strong> Processes are executed in the order they arrive in the ready queue.</p>
+                    
+                    <h4>🔧 How it Works:</h4>
+                    <pre class="code-block">
+Ready Queue: [P1] → [P2] → [P3] → [P4]
+Execution:   P1 runs completely, then P2, then P3, then P4
+                    </pre>
+                    
+                    <h4>📊 Example:</h4>
+                    <pre class="code-block">
+Process | Arrival Time | Burst Time
+P1      |      0       |     8
+P2      |      1       |     4  
+P3      |      2       |     9
+P4      |      3       |     5
+
+Gantt Chart:
+0    8    12    21    26
+|P1  |P2  |P3   |P4  |
+
+Waiting Time:
+P1: 0, P2: 7, P3: 10, P4: 18
+Average Waiting Time: (0+7+10+18)/4 = 8.75
+                    </pre>
+                    
+                    <h4>✅ Advantages:</h4>
+                    <ul>
+                        <li>Simple to understand and implement</li>
+                        <li>No starvation - every process gets CPU</li>
+                        <li>Fair in terms of arrival order</li>
+                    </ul>
+                    
+                    <h4>❌ Disadvantages:</h4>
+                    <ul>
+                        <li><strong>Convoy Effect:</strong> Short processes wait for long ones</li>
+                        <li>Poor average waiting time</li>
+                        <li>Not suitable for interactive systems</li>
+                    </ul>
+                    
+                    <h4>🎯 Best Use Case:</h4>
+                    <p>Batch processing systems where processes have similar execution times.</p>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">2. Shortest Job First (SJF)</div>
+                <div class="detailed-explanation">
+                    <p><strong>Algorithm:</strong> Select the process with the smallest burst time. Optimal for minimizing average waiting time.</p>
+                    
+                    <h4>🔧 Two Variants:</h4>
+                    <h5>Non-Preemptive SJF:</h5>
+                    <pre class="code-block">
+Process | Arrival Time | Burst Time
+P1      |      0       |     8
+P2      |      1       |     4  
+P3      |      2       |     9
+P4      |      3       |     5
+
+Execution Order: P1(0) → P2(4) → P4(5) → P3(9)
+Gantt Chart:
+0    8    12    17    26
+|P1  |P2  |P4  |P3   |
+                    </pre>
+                    
+                    <h5>Preemptive SJF (SRTF - Shortest Remaining Time First):</h5>
+                    <pre class="code-block">
+Same processes as above:
+
+0-1: P1 runs (remaining: 7)
+1-2: P2 arrives (burst: 4 < 7), P2 runs (remaining: 3)
+2-3: P3 arrives (burst: 9 > 3), P2 continues (remaining: 2)
+3-5: P4 arrives (burst: 5 > 2), P2 continues, completes
+5-8: P4 runs (burst: 5 < 7), P4 completes
+8-15: P1 resumes and completes
+15-24: P3 runs and completes
+
+Gantt Chart:
+0  1    5    8    15    24
+|P1|P2  |P4  |P1  |P3   |
+                    </pre>
+                    
+                    <h4>✅ Advantages:</h4>
+                    <ul>
+                        <li>Optimal average waiting time</li>
+                        <li>Good for batch systems</li>
+                        <li>Minimizes total completion time</li>
+                    </ul>
+                    
+                    <h4>❌ Disadvantages:</h4>
+                    <ul>
+                        <li><strong>Starvation:</strong> Long processes may never execute</li>
+                        <li>Requires knowledge of burst time (prediction needed)</li>
+                        <li>Not practical for interactive systems</li>
+                    </ul>
+                    
+                    <h4>🔮 Burst Time Prediction:</h4>
+                    <pre class="code-block">
+τ(n+1) = α × t(n) + (1-α) × τ(n)
+
+Where:
+τ(n+1) = predicted next burst time
+t(n) = actual last burst time  
+α = smoothing factor (0 ≤ α ≤ 1)
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">3. Round Robin (RR)</div>
+                <div class="detailed-explanation">
+                    <p><strong>Algorithm:</strong> Each process gets a fixed time slice (quantum). When quantum expires, process goes to end of ready queue.</p>
+                    
+                    <h4>🔧 How it Works:</h4>
+                    <pre class="code-block">
+Time Quantum = 3
+
+Process | Arrival Time | Burst Time
+P1      |      0       |     8
+P2      |      1       |     4  
+P3      |      2       |     9
+
+Round 1: P1(3), P2(3), P3(3)
+Round 2: P1(3), P2(1), P3(3)  
+Round 3: P1(2), P3(3)
+
+Gantt Chart:
+0   3   6   9   12  13  16  18  21
+|P1 |P2 |P3 |P1 |P2|P3 |P1|P3 |
+
+Waiting Time:
+P1: (0) + (9-3) + (16-12) = 10
+P2: (3-1) + (12-6) = 8  
+P3: (6-2) + (13-9) + (18-16) = 10
+Average: (10+8+10)/3 = 9.33
+                    </pre>
+                    
+                    <h4>⏰ Time Quantum Selection:</h4>
+                    <ul>
+                        <li><strong>Too Small:</strong> High context switching overhead</li>
+                        <li><strong>Too Large:</strong> Becomes FCFS</li>
+                        <li><strong>Rule of Thumb:</strong> 80% of processes should complete within one quantum</li>
+                    </ul>
+                    
+                    <h4>✅ Advantages:</h4>
+                    <ul>
                         <li>Fair allocation of CPU time</li>
-                        <li>Time quantum affects performance</li>
-                    </ol>
-                </div>
-                <div class="timeline">
-                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
-                    <div class="time-slot" style="background: #4ecdc4;">P2</div>
-                    <div class="time-slot" style="background: #45b7d1;">P3</div>
-                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
-                    <div class="time-slot" style="background: #45b7d1;">P3</div>
+                        <li>Good response time for interactive systems</li>
+                        <li>No starvation</li>
+                        <li>Preemptive nature prevents monopolization</li>
+                    </ul>
+                    
+                    <h4>❌ Disadvantages:</h4>
+                    <ul>
+                        <li>Higher average turnaround time than SJF</li>
+                        <li>Context switching overhead</li>
+                        <li>Performance depends on quantum size</li>
+                    </ul>
+                    
+                    <h4>🎯 Best Use Case:</h4>
+                    <p>Time-sharing systems, interactive applications, multi-user environments.</p>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Priority Scheduling</div>
-                <div class="visual-element">
-                    <div class="queue-item" style="background: #dc3545;">High Priority</div>
-                    <div class="queue-item" style="background: #ffc107;">Medium Priority</div>
-                    <div class="queue-item" style="background: #28a745;">Low Priority</div>
+                <div class="diagram-title">4. Priority Scheduling</div>
+                <div class="detailed-explanation">
+                    <p><strong>Algorithm:</strong> Each process has a priority. CPU allocated to highest priority process.</p>
+                    
+                    <h4>🔧 Priority Assignment:</h4>
+                    <ul>
+                        <li><strong>Internal:</strong> Memory requirements, file usage, CPU/I/O ratio</li>
+                        <li><strong>External:</strong> User importance, payment, department</li>
+                        <li><strong>Static:</strong> Priority fixed throughout execution</li>
+                        <li><strong>Dynamic:</strong> Priority changes during execution</li>
+                    </ul>
+                    
+                    <h4>📊 Example (Lower number = Higher priority):</h4>
+                    <pre class="code-block">
+Process | Arrival | Burst | Priority
+P1      |    0    |   8   |    3
+P2      |    1    |   4   |    1    (Highest)
+P3      |    2    |   9   |    4    (Lowest)
+P4      |    3    |   5   |    2
+
+Non-Preemptive Priority:
+0-8: P1 runs (no other process available)
+8-12: P2 runs (priority 1, highest among P2,P3,P4)
+12-17: P4 runs (priority 2)
+17-26: P3 runs (priority 4)
+
+Preemptive Priority:
+0-1: P1 runs
+1-5: P2 arrives (priority 1 > 3), P2 runs
+5-8: P2 completes, P1 resumes
+8-13: P4 runs (priority 2 > 3)
+13-20: P1 resumes
+20-29: P3 runs
+                    </pre>
+                    
+                    <h4>⚠️ Starvation Problem:</h4>
+                    <p><strong>Problem:</strong> Low priority processes may never execute if high priority processes keep arriving.</p>
+                    
+                    <h4>💡 Solution - Aging:</h4>
+                    <pre class="code-block">
+Aging Algorithm:
+1. Increase priority of waiting processes over time
+2. Example: Priority = Priority - (waiting_time / aging_factor)
+3. Eventually, even low priority processes get high priority
+                    </pre>
+                    
+                    <h4>✅ Advantages:</h4>
+                    <ul>
+                        <li>Important processes get CPU first</li>
+                        <li>Flexible - can be preemptive or non-preemptive</li>
+                        <li>Good for real-time systems</li>
+                    </ul>
+                    
+                    <h4>❌ Disadvantages:</h4>
+                    <ul>
+                        <li>Starvation of low priority processes</li>
+                        <li>Priority inversion problem</li>
+                        <li>Difficult to determine optimal priorities</li>
+                    </ul>
                 </div>
-                <div class="algorithm-steps">
-                    <h4>Types:</h4>
-                    <ol>
-                        <li><strong>Preemptive:</strong> Higher priority process can interrupt</li>
-                        <li><strong>Non-preemptive:</strong> Process runs to completion</li>
-                        <li><strong>Problem:</strong> Starvation of low priority processes</li>
-                        <li><strong>Solution:</strong> Aging technique</li>
-                    </ol>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">5. Multi-Level Queue Scheduling</div>
+                <div class="detailed-explanation">
+                    <p><strong>Algorithm:</strong> Processes are classified into different queues based on their characteristics. Each queue has its own scheduling algorithm.</p>
+                    
+                    <h4>🏗️ Queue Structure:</h4>
+                    <pre class="code-block">
+┌─────────────────────┐ ← Highest Priority
+│  System Processes   │ (Priority Scheduling)
+├─────────────────────┤
+│ Interactive Processes│ (Round Robin, q=2)
+├─────────────────────┤  
+│   Batch Processes   │ (FCFS)
+├─────────────────────┤
+│  Student Processes  │ (FCFS)
+└─────────────────────┘ ← Lowest Priority
+                    </pre>
+                    
+                    <h4>🔄 Queue Scheduling:</h4>
+                    <ul>
+                        <li><strong>Fixed Priority:</strong> Higher queue always gets CPU first</li>
+                        <li><strong>Time Slicing:</strong> Each queue gets percentage of CPU time</li>
+                    </ul>
+                    
+                    <h4>📊 Example with Time Slicing:</h4>
+                    <pre class="code-block">
+Queue Allocation:
+- System: 50% CPU time
+- Interactive: 30% CPU time  
+- Batch: 15% CPU time
+- Student: 5% CPU time
+
+If system queue is empty, interactive gets CPU
+If both system and interactive empty, batch gets CPU
+                    </pre>
+                    
+                    <h4>✅ Advantages:</h4>
+                    <ul>
+                        <li>Different algorithms for different process types</li>
+                        <li>System processes get priority</li>
+                        <li>Good separation of concerns</li>
+                    </ul>
+                    
+                    <h4>❌ Disadvantages:</h4>
+                    <ul>
+                        <li>Starvation of lower priority queues</li>
+                        <li>Inflexible - processes can't move between queues</li>
+                        <li>Complex to implement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">6. Multi-Level Feedback Queue</div>
+                <div class="detailed-explanation">
+                    <p><strong>Algorithm:</strong> Processes can move between queues based on their behavior. Adaptive scheduling that learns from process characteristics.</p>
+                    
+                    <h4>🔄 Queue Movement Rules:</h4>
+                    <pre class="code-block">
+Queue 0: RR with quantum = 8
+Queue 1: RR with quantum = 16  
+Queue 2: FCFS
+
+Rules:
+1. New process enters Queue 0
+2. If process uses full quantum → demoted to next queue
+3. If process blocks for I/O → promoted to higher queue
+4. If process completes within quantum → stays in same queue
+                    </pre>
+                    
+                    <h4>📊 Example Process Movement:</h4>
+                    <pre class="code-block">
+Process P1 (CPU-intensive):
+Queue 0: Uses full quantum (8) → Demoted to Queue 1
+Queue 1: Uses full quantum (16) → Demoted to Queue 2  
+Queue 2: Runs with FCFS until completion
+
+Process P2 (I/O-intensive):
+Queue 0: Blocks for I/O after 3 units → Stays in Queue 0
+Queue 0: Blocks for I/O after 5 units → Stays in Queue 0
+Continues in Queue 0 due to frequent I/O
+                    </pre>
+                    
+                    <h4>🎯 Adaptive Behavior:</h4>
+                    <ul>
+                        <li><strong>Interactive processes:</strong> Stay in high priority queues (frequent I/O)</li>
+                        <li><strong>CPU-bound processes:</strong> Move to lower priority queues</li>
+                        <li><strong>Aging:</strong> Processes in lower queues eventually get promoted</li>
+                    </ul>
+                    
+                    <h4>✅ Advantages:</h4>
+                    <ul>
+                        <li>Adapts to process behavior</li>
+                        <li>Good response time for interactive processes</li>
+                        <li>Prevents starvation through aging</li>
+                        <li>No need to know process characteristics in advance</li>
+                    </ul>
+                    
+                    <h4>❌ Disadvantages:</h4>
+                    <ul>
+                        <li>Complex to implement and tune</li>
+                        <li>High overhead due to queue management</li>
+                        <li>Difficult to predict performance</li>
+                    </ul>
+                    
+                    <h4>🏆 Real-world Usage:</h4>
+                    <p>Used in modern operating systems like Windows, Linux, and macOS with various modifications.</p>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">7. Additional Scheduling Algorithms</div>
+                <div class="detailed-explanation">
+                    <h4>🔄 Highest Response Ratio Next (HRRN):</h4>
+                    <pre class="code-block">
+Response Ratio = (Waiting Time + Burst Time) / Burst Time
+
+Select process with highest response ratio
+Prevents starvation while favoring shorter processes
+                    </pre>
+                    
+                    <h4>📊 Longest Job First (LJF):</h4>
+                    <ul>
+                        <li>Opposite of SJF - select longest process first</li>
+                        <li>Poor average waiting time</li>
+                        <li>Rarely used in practice</li>
+                    </ul>
+                    
+                    <h4>⏰ Longest Remaining Time First (LRTF):</h4>
+                    <ul>
+                        <li>Preemptive version of LJF</li>
+                        <li>Worst possible scheduling algorithm</li>
+                        <li>Used mainly for academic comparison</li>
+                    </ul>
+                    
+                    <h4>🎯 Algorithm Comparison Summary:</h4>
+                    <pre class="code-block">
+Algorithm    | Preemptive | Starvation | Overhead | Use Case
+FCFS         | No         | No         | Low      | Batch
+SJF          | Optional   | Yes        | Medium   | Batch  
+RR           | Yes        | No         | High     | Interactive
+Priority     | Optional   | Yes        | Medium   | Real-time
+MLQ          | Yes        | Yes        | High     | Mixed
+MLFQ         | Yes        | No         | Very High| General
+                    </pre>
                 </div>
             </div>
         </div>
@@ -465,73 +1037,371 @@
     <div id="memory-management" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('memory-management')">&times;</span>
-            <h2>💾 Memory Management</h2>
+            <h2>💾 Memory Management - Complete Guide</h2>
             
             <div class="concept-diagram">
-                <div class="diagram-title">Memory Allocation Strategies</div>
-                <div class="visual-element">
-                    <div class="memory-block">First Fit</div>
-                    <div class="memory-block">Best Fit</div>
-                    <div class="memory-block">Worst Fit</div>
-                </div>
-                <div class="algorithm-steps">
-                    <h4>Allocation Methods:</h4>
-                    <ol>
-                        <li><strong>First Fit:</strong> Allocate first available block</li>
-                        <li><strong>Best Fit:</strong> Allocate smallest suitable block</li>
-                        <li><strong>Worst Fit:</strong> Allocate largest available block</li>
-                    </ol>
-                </div>
-            </div>
-
-            <div class="concept-diagram">
-                <div class="diagram-title">Paging System</div>
-                <div class="visual-element">
-                    <div class="memory-block">Page 0</div>
-                    <div class="memory-block">Page 1</div>
-                    <div class="memory-block">Page 2</div>
-                    <div class="memory-block">Page 3</div>
-                </div>
-                <span class="arrow">↓</span>
-                <div class="visual-element">
-                    <div class="memory-block">Frame 2</div>
-                    <div class="memory-block">Frame 0</div>
-                    <div class="memory-block">Frame 3</div>
-                    <div class="memory-block">Frame 1</div>
-                </div>
-                <p><strong>Paging:</strong> Divides memory into fixed-size blocks (pages/frames) to eliminate external fragmentation.</p>
-            </div>
-
-            <div class="concept-diagram">
-                <div class="diagram-title">Virtual Memory</div>
-                <div class="algorithm-steps">
-                    <h4>Key Concepts:</h4>
-                    <ol>
-                        <li><strong>Demand Paging:</strong> Load pages only when needed</li>
-                        <li><strong>Page Fault:</strong> Occurs when accessing non-resident page</li>
-                        <li><strong>Page Replacement:</strong> Remove pages when memory is full</li>
-                        <li><strong>Thrashing:</strong> Excessive paging activity</li>
-                    </ol>
-                </div>
-                <div class="visual-element">
-                    <div class="memory-block">Virtual Address Space</div>
-                    <span class="arrow">→</span>
-                    <div class="memory-block">Physical Memory</div>
-                    <span class="arrow">→</span>
-                    <div class="memory-block">Secondary Storage</div>
+                <div class="diagram-title">Memory Management Introduction</div>
+                <div class="detailed-explanation">
+                    <p><strong>Purpose:</strong> Memory management handles allocation and deallocation of memory space to processes, ensuring efficient utilization and protection.</p>
+                    
+                    <h4>🎯 Key Objectives:</h4>
+                    <ul>
+                        <li><strong>Allocation:</strong> Provide memory space to processes</li>
+                        <li><strong>Protection:</strong> Prevent processes from accessing each other's memory</li>
+                        <li><strong>Sharing:</strong> Allow controlled sharing of memory between processes</li>
+                        <li><strong>Efficiency:</strong> Minimize memory waste and access time</li>
+                    </ul>
+                    
+                    <h4>🏗️ Memory Hierarchy:</h4>
+                    <pre class="code-block">
+CPU Registers    ←── Fastest, Smallest
+Cache Memory     ←── Very Fast, Small
+Main Memory      ←── Fast, Medium
+Secondary Storage ←── Slow, Large
+                    </pre>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Page Replacement Algorithms</div>
-                <div class="algorithm-steps">
-                    <h4>Common Algorithms:</h4>
-                    <ol>
-                        <li><strong>FIFO:</strong> Replace oldest page</li>
-                        <li><strong>LRU:</strong> Replace least recently used page</li>
-                        <li><strong>Optimal:</strong> Replace page not used for longest time</li>
-                        <li><strong>Clock:</strong> Circular buffer with reference bits</li>
-                    </ol>
+                <div class="diagram-title">1. Memory Allocation Strategies</div>
+                <div class="detailed-explanation">
+                    <p><strong>Problem:</strong> How to allocate memory blocks to processes when multiple free blocks are available?</p>
+                    
+                    <h4>🔧 Allocation Algorithms:</h4>
+                    
+                    <h5>1️⃣ First Fit:</h5>
+                    <pre class="code-block">
+Memory Layout: [100K] [50K] [200K] [300K] [75K]
+                Free   Used   Free   Free   Used
+
+Request: 150K
+Result: Allocated in 200K block
+Remaining: [100K] [50K] [50K] [300K] [75K]
+                   Free   Used  Free   Free   Used
+                    </pre>
+                    <p><strong>Algorithm:</strong> Scan from beginning, allocate first suitable block</p>
+                    <p><strong>Advantage:</strong> Fast allocation</p>
+                    <p><strong>Disadvantage:</strong> Creates small fragments at beginning</p>
+                    
+                    <h5>2️⃣ Best Fit:</h5>
+                    <pre class="code-block">
+Memory Layout: [100K] [50K] [200K] [300K] [75K]
+                Free   Used   Free   Free   Used
+
+Request: 150K
+Search all blocks: 100K(too small), 200K(fits), 300K(fits)
+Result: Allocated in 200K block (smallest that fits)
+Remaining: [100K] [50K] [50K] [300K] [75K]
+                   Free   Used  Free   Free   Used
+                    </pre>
+                    <p><strong>Algorithm:</strong> Find smallest block that fits</p>
+                    <p><strong>Advantage:</strong> Minimizes wasted space</p>
+                    <p><strong>Disadvantage:</strong> Slow search, creates tiny fragments</p>
+                    
+                    <h5>3️⃣ Worst Fit:</h5>
+                    <pre class="code-block">
+Memory Layout: [100K] [50K] [200K] [300K] [75K]
+                Free   Used   Free   Free   Used
+
+Request: 150K
+Search all blocks: Find largest (300K)
+Result: Allocated in 300K block
+Remaining: [100K] [50K] [200K] [150K] [75K]
+                   Free   Used   Free   Free   Used
+                    </pre>
+                    <p><strong>Algorithm:</strong> Find largest available block</p>
+                    <p><strong>Advantage:</strong> Leaves larger remaining fragments</p>
+                    <p><strong>Disadvantage:</strong> Wastes large blocks quickly</p>
+                    
+                    <h4>📊 Performance Comparison:</h4>
+                    <pre class="code-block">
+Algorithm  | Speed | Memory Utilization | Fragmentation
+First Fit  | Fast  | Good              | High at start
+Best Fit   | Slow  | Best              | Many tiny holes
+Worst Fit  | Slow  | Poor              | Fewer large holes
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">2. Paging System - Fixed-Size Allocation</div>
+                <div class="detailed-explanation">
+                    <p><strong>Concept:</strong> Divide physical memory into fixed-size frames and logical memory into same-size pages.</p>
+                    
+                    <h4>🏗️ Paging Structure:</h4>
+                    <pre class="code-block">
+LOGICAL MEMORY (Process View)
+┌─────────┐ Page 0 (4KB)
+│ Code    │
+├─────────┤ Page 1 (4KB)  
+│ Data    │
+├─────────┤ Page 2 (4KB)
+│ Stack   │
+└─────────┘
+
+PHYSICAL MEMORY (OS View)
+┌─────────┐ Frame 0 (4KB) ← Page 2
+├─────────┤ Frame 1 (4KB) ← Other Process
+├─────────┤ Frame 2 (4KB) ← Page 0
+├─────────┤ Frame 3 (4KB) ← Page 1
+└─────────┘
+                    </pre>
+                    
+                    <h4>🔄 Address Translation:</h4>
+                    <pre class="code-block">
+Logical Address: [Page Number | Offset]
+                     12 bits   | 12 bits (4KB pages)
+
+Example: Logical Address 8196 (0x2004)
+Page Number: 8196 / 4096 = 2
+Offset: 8196 % 4096 = 4
+
+Page Table: Page 2 → Frame 0
+Physical Address: Frame 0 + Offset 4 = 4
+                    </pre>
+                    
+                    <h4>📋 Page Table Structure:</h4>
+                    <pre class="code-block">
+Page Table Entry (PTE):
+┌─────────────┬─────┬─────┬─────┬─────┬─────┐
+│Frame Number │Valid│Dirty│Ref  │Prot │Other│
+│   20 bits   │ 1   │ 1   │ 1   │ 3   │ 6   │
+└─────────────┴─────┴─────┴─────┴─────┴─────┘
+
+Valid: Page is in memory
+Dirty: Page has been modified
+Reference: Page has been accessed
+Protection: Read/Write/Execute permissions
+                    </pre>
+                    
+                    <h4>✅ Advantages of Paging:</h4>
+                    <ul>
+                        <li><strong>No External Fragmentation:</strong> All frames are same size</li>
+                        <li><strong>Easy Allocation:</strong> Any free frame can be used</li>
+                        <li><strong>Protection:</strong> Each page can have different permissions</li>
+                        <li><strong>Sharing:</strong> Multiple processes can share pages</li>
+                    </ul>
+                    
+                    <h4>❌ Disadvantages:</h4>
+                    <ul>
+                        <li><strong>Internal Fragmentation:</strong> Last page may be partially used</li>
+                        <li><strong>Memory Overhead:</strong> Page table storage</li>
+                        <li><strong>Translation Overhead:</strong> Extra memory access for page table</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">3. Virtual Memory - Beyond Physical Limits</div>
+                <div class="detailed-explanation">
+                    <p><strong>Concept:</strong> Allow processes to use more memory than physically available by storing some pages on disk.</p>
+                    
+                    <h4>🎯 Key Benefits:</h4>
+                    <ul>
+                        <li><strong>Large Address Space:</strong> Process can be larger than physical memory</li>
+                        <li><strong>Multiprogramming:</strong> More processes can run simultaneously</li>
+                        <li><strong>Isolation:</strong> Each process has its own virtual address space</li>
+                        <li><strong>Efficiency:</strong> Only needed pages are loaded</li>
+                    </ul>
+                    
+                    <h4>🔄 Demand Paging Process:</h4>
+                    <pre class="code-block">
+1. Process accesses page
+2. Check page table
+3. If page in memory → Access directly
+4. If page not in memory → Page Fault
+5. OS loads page from disk to memory
+6. Update page table
+7. Restart instruction
+                    </pre>
+                    
+                    <h4>⚡ Page Fault Handling:</h4>
+                    <pre class="code-block">
+Page Fault Occurs:
+1. Hardware traps to OS
+2. OS checks if address is valid
+3. Find free frame (or select victim)
+4. Read page from disk to frame
+5. Update page table
+6. Restart faulting instruction
+
+Time Cost:
+- Memory access: ~100 nanoseconds
+- Disk access: ~10 milliseconds
+- Ratio: 1:100,000 (disk is 100,000x slower!)
+                    </pre>
+                    
+                    <h4>📊 Virtual Memory Example:</h4>
+                    <pre class="code-block">
+Process Virtual Space: 1GB (256K pages)
+Physical Memory: 256MB (64K frames)
+Page Size: 4KB
+
+Process can use 1GB virtual space
+Only active pages (maybe 10-20MB) in physical memory
+Rest stored on disk (swap space)
+                    </pre>
+                    
+                    <h4>⚠️ Thrashing:</h4>
+                    <p><strong>Problem:</strong> System spends more time paging than executing</p>
+                    <pre class="code-block">
+Thrashing Scenario:
+1. Too many processes in memory
+2. Each process gets few frames
+3. Frequent page faults occur
+4. CPU utilization drops
+5. OS thinks it needs more processes
+6. Adds more processes → Worse thrashing
+
+Solution: Working Set Model, Page Fault Frequency
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">4. Page Replacement Algorithms</div>
+                <div class="detailed-explanation">
+                    <p><strong>Problem:</strong> When memory is full and a new page needs to be loaded, which page should be removed?</p>
+                    
+                    <h4>🔄 FIFO (First In, First Out):</h4>
+                    <pre class="code-block">
+Reference String: 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2
+Frames: 3
+
+Step | Pages in Memory | Page Fault?
+  7  |      [7]        |     Yes
+  0  |    [7,0]        |     Yes  
+  1  |   [7,0,1]       |     Yes
+  2  |   [0,1,2]       |     Yes (remove 7)
+  0  |   [0,1,2]       |     No
+  3  |   [1,2,3]       |     Yes (remove 0)
+  0  |   [2,3,0]       |     Yes (remove 1)
+  4  |   [3,0,4]       |     Yes (remove 2)
+  2  |   [0,4,2]       |     Yes (remove 3)
+  3  |   [4,2,3]       |     Yes (remove 0)
+
+Total Page Faults: 9
+                    </pre>
+                    
+                    <h4>🧠 LRU (Least Recently Used):</h4>
+                    <pre class="code-block">
+Same Reference String: 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2
+
+Step | Pages in Memory | Last Used Time | Page Fault?
+  7  |      [7]        |      [1]       |     Yes
+  0  |    [7,0]        |     [1,2]      |     Yes
+  1  |   [7,0,1]       |    [1,2,3]     |     Yes
+  2  |   [0,1,2]       |    [2,3,4]     |     Yes (remove 7)
+  0  |   [0,1,2]       |    [5,3,4]     |     No (update 0)
+  3  |   [0,3,2]       |    [5,6,4]     |     Yes (remove 1)
+  0  |   [0,3,2]       |    [7,6,4]     |     No
+  4  |   [0,3,4]       |    [7,6,8]     |     Yes (remove 2)
+
+Total Page Faults: 6 (Better than FIFO!)
+                    </pre>
+                    
+                    <h4>🎯 Optimal Algorithm:</h4>
+                    <pre class="code-block">
+Replace page that will be used farthest in future
+(Theoretical - requires future knowledge)
+
+Same Reference String:
+Step | Pages | Next Use | Replace
+  2  |[7,0,1]|[∞,4,∞]  | Remove 7 (never used)
+  3  |[0,1,2]|[4,∞,6]  | Remove 1 (used farthest)
+
+Total Page Faults: 5 (Optimal)
+                    </pre>
+                    
+                    <h4>⏰ Clock Algorithm (Second Chance):</h4>
+                    <pre class="code-block">
+Circular buffer with reference bits:
+
+    ┌─[0,R=1]─┐
+    │         │
+[1,R=0]     [2,R=1]
+    │         │
+    └─[3,R=0]─┘
+         ↑
+      pointer
+
+Algorithm:
+1. Check page at pointer
+2. If R=0: Replace this page
+3. If R=1: Set R=0, advance pointer
+4. Repeat until R=0 page found
+
+Approximates LRU with less overhead
+                    </pre>
+                    
+                    <h4>📊 Algorithm Comparison:</h4>
+                    <pre class="code-block">
+Algorithm | Page Faults | Overhead | Implementation
+FIFO      |    High     |   Low    |    Simple
+LRU       |    Low      |   High   |    Complex
+Optimal   |   Lowest    |    -     |  Impossible
+Clock     |   Medium    |   Low    |    Simple
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">5. Memory Compaction and Segmentation</div>
+                <div class="detailed-explanation">
+                    <h4>🔧 Memory Compaction:</h4>
+                    <p><strong>Problem:</strong> External fragmentation creates unusable memory holes</p>
+                    
+                    <pre class="code-block">
+Before Compaction:
+[Process A][Free 50K][Process B][Free 30K][Process C][Free 100K]
+
+After Compaction:
+[Process A][Process B][Process C][Free 180K]
+
+Benefits: Combines small holes into large block
+Cost: Must relocate processes (expensive)
+                    </pre>
+                    
+                    <h4>🗂️ Segmentation:</h4>
+                    <p><strong>Concept:</strong> Divide program into logical segments (code, data, stack)</p>
+                    
+                    <pre class="code-block">
+Segment Table:
+Segment | Base Address | Limit | Permissions
+Code    |    1000      | 2000  |   R-X
+Data    |    4000      | 1500  |   RW-
+Stack   |    8000      | 1000  |   RW-
+
+Logical Address: [Segment Number | Offset]
+Physical Address: Base[Segment] + Offset
+
+Advantages:
+- Logical division matches program structure
+- Different protection for different segments
+- Easy sharing of code segments
+
+Disadvantages:
+- External fragmentation
+- Complex memory management
+                    </pre>
+                    
+                    <h4>🔄 Paged Segmentation:</h4>
+                    <p><strong>Hybrid Approach:</strong> Combine benefits of both paging and segmentation</p>
+                    
+                    <pre class="code-block">
+Logical Address: [Segment | Page | Offset]
+
+1. Use segment number to find segment table entry
+2. Use page number to find page table entry  
+3. Use offset to find exact location in frame
+
+Benefits:
+- No external fragmentation (paging)
+- Logical program structure (segmentation)
+- Protection and sharing capabilities
+
+Used in: Intel x86 architecture
+                    </pre>
                 </div>
             </div>
         </div>
@@ -540,68 +1410,485 @@
     <div id="deadlock" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('deadlock')">&times;</span>
-            <h2>🔒 Deadlock Management</h2>
+            <h2>🔒 Deadlock Management - Complete Guide</h2>
             
             <div class="concept-diagram">
-                <div class="diagram-title">Deadlock Conditions (Coffman Conditions)</div>
-                <div class="algorithm-steps">
-                    <h4>Four Necessary Conditions:</h4>
-                    <ol>
-                        <li><strong>Mutual Exclusion:</strong> Resources cannot be shared</li>
-                        <li><strong>Hold and Wait:</strong> Process holds resources while waiting</li>
-                        <li><strong>No Preemption:</strong> Resources cannot be forcibly taken</li>
-                        <li><strong>Circular Wait:</strong> Circular chain of waiting processes</li>
-                    </ol>
+                <div class="diagram-title">Deadlock Introduction</div>
+                <div class="detailed-explanation">
+                    <p><strong>Definition:</strong> A deadlock is a situation where two or more processes are blocked forever, waiting for each other to release resources.</p>
+                    
+                    <h4>🎯 Real-World Analogy:</h4>
+                    <p>Imagine two cars approaching a narrow bridge from opposite directions. Each car enters the bridge but cannot proceed because the other car is blocking the way. Neither can back up, creating a deadlock.</p>
+                    
+                    <h4>💻 Computer Example:</h4>
+                    <pre class="code-block">
+Process P1:                Process P2:
+1. Lock(Resource A)        1. Lock(Resource B)
+2. Lock(Resource B) ←──────── 2. Lock(Resource A) ← DEADLOCK!
+3. Use both resources     3. Use both resources
+4. Unlock(Resource B)     4. Unlock(Resource A)
+5. Unlock(Resource A)     5. Unlock(Resource B)
+                    </pre>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Deadlock Example</div>
-                <div class="visual-element">
-                    <div class="process-box">Process P1</div>
-                    <span class="arrow">→</span>
-                    <div class="memory-block">Resource R2</div>
+                <div class="diagram-title">1. Coffman Conditions - Four Necessary Conditions</div>
+                <div class="detailed-explanation">
+                    <p><strong>Key Insight:</strong> ALL four conditions must be present simultaneously for deadlock to occur.</p>
+                    
+                    <h4>1️⃣ Mutual Exclusion:</h4>
+                    <p><strong>Definition:</strong> At least one resource must be held in a non-shareable mode.</p>
+                    <pre class="code-block">
+Example: Printer Resource
+- Only one process can use printer at a time
+- Cannot be shared simultaneously
+- If P1 is printing, P2 must wait
+
+Non-Example: Read-only file
+- Multiple processes can read simultaneously
+- No mutual exclusion → No deadlock possible
+                    </pre>
+                    
+                    <h4>2️⃣ Hold and Wait:</h4>
+                    <p><strong>Definition:</strong> A process must be holding at least one resource and waiting for additional resources held by other processes.</p>
+                    <pre class="code-block">
+Process P1:
+- Currently holds: Scanner
+- Waiting for: Printer (held by P2)
+
+Process P2:
+- Currently holds: Printer  
+- Waiting for: Scanner (held by P1)
+
+Both processes hold resources while waiting!
+                    </pre>
+                    
+                    <h4>3️⃣ No Preemption:</h4>
+                    <p><strong>Definition:</strong> Resources cannot be forcibly removed from processes. They must be released voluntarily.</p>
+                    <pre class="code-block">
+Examples of Non-Preemptible Resources:
+- Mutex locks
+- Semaphores
+- I/O devices (printer, scanner)
+- Database records
+
+Examples of Preemptible Resources:
+- CPU (can be preempted by scheduler)
+- Memory pages (can be swapped out)
+                    </pre>
+                    
+                    <h4>4️⃣ Circular Wait:</h4>
+                    <p><strong>Definition:</strong> A circular chain of processes exists where each process waits for a resource held by the next process in the chain.</p>
+                    <pre class="code-block">
+Circular Wait Chain:
+P1 → waits for → R2 (held by P2)
+P2 → waits for → R3 (held by P3)  
+P3 → waits for → R1 (held by P1)
+
+Visual Representation:
+    P1 ←─── R1
+    │        ↑
+    ↓        │
+    R2 ───→ P3
+    ↑        │
+    │        ↓
+    P2 ←─── R3
+                    </pre>
                 </div>
-                <div class="visual-element">
-                    <div class="process-box">Process P2</div>
-                    <span class="arrow">→</span>
-                    <div class="memory-block">Resource R1</div>
-                </div>
-                <div class="visual-element">
-                    <div class="memory-block">R1 held by P1</div>
-                    <div class="memory-block">R2 held by P2</div>
-                </div>
-                <p><strong>Circular Wait:</strong> P1 waits for R2 (held by P2), P2 waits for R1 (held by P1)</p>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Deadlock Handling Strategies</div>
-                <div class="algorithm-steps">
-                    <h4>Prevention:</h4>
-                    <ol>
-                        <li>Eliminate one of the four conditions</li>
-                        <li>Resource ordering to prevent circular wait</li>
-                        <li>Banker's algorithm for safe allocation</li>
-                    </ol>
-                    <h4>Detection & Recovery:</h4>
-                    <ol>
-                        <li>Use resource allocation graph</li>
-                        <li>Process termination</li>
-                        <li>Resource preemption</li>
-                    </ol>
+                <div class="diagram-title">2. Resource Allocation Graph (RAG)</div>
+                <div class="detailed-explanation">
+                    <p><strong>Purpose:</strong> Visual representation of resource allocation and requests to detect deadlocks.</p>
+                    
+                    <h4>🔧 Graph Components:</h4>
+                    <ul>
+                        <li><strong>Process Node:</strong> Circle (P1, P2, P3)</li>
+                        <li><strong>Resource Node:</strong> Rectangle (R1, R2, R3)</li>
+                        <li><strong>Assignment Edge:</strong> Resource → Process (solid arrow)</li>
+                        <li><strong>Request Edge:</strong> Process → Resource (dashed arrow)</li>
+                    </ul>
+                    
+                    <h4>📊 Example - No Deadlock:</h4>
+                    <pre class="code-block">
+Resources: R1(1 instance), R2(1 instance), R3(1 instance)
+Processes: P1, P2, P3
+
+Current State:
+P1 holds R1, requests R2
+P2 holds R2, requests R3  
+P3 holds R3
+
+Graph:
+R1 ──→ P1 ┄┄→ R2 ──→ P2 ┄┄→ R3 ──→ P3
+
+No cycle = No deadlock
+P3 can finish, release R3 to P2, then P2 releases R2 to P1
+                    </pre>
+                    
+                    <h4>⚠️ Example - Deadlock Present:</h4>
+                    <pre class="code-block">
+Current State:
+P1 holds R1, requests R2
+P2 holds R2, requests R1
+
+Graph:
+    P1 ←── R1
+    │       ↑
+    ↓       │
+    R2 ──→ P2
+
+Cycle detected: P1 → R2 → P2 → R1 → P1
+With single instances: Cycle = Deadlock!
+                    </pre>
+                    
+                    <h4>🔍 Deadlock Detection Algorithm:</h4>
+                    <pre class="code-block">
+1. Build Resource Allocation Graph
+2. Look for cycles in the graph
+3. If cycle exists with single-instance resources:
+   → Deadlock confirmed
+4. If cycle exists with multi-instance resources:
+   → Run Banker's algorithm to check
+5. If no cycle:
+   → No deadlock
+                    </pre>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Banker's Algorithm</div>
-                <div class="algorithm-steps">
-                    <h4>Safe State Algorithm:</h4>
-                    <ol>
-                        <li>Check if system is in safe state</li>
-                        <li>Find process that can complete with available resources</li>
-                        <li>Assume it completes and releases resources</li>
-                        <li>Repeat until all processes complete</li>
-                    </ol>
+                <div class="diagram-title">3. Deadlock Prevention</div>
+                <div class="detailed-explanation">
+                    <p><strong>Strategy:</strong> Eliminate at least one of the four Coffman conditions to make deadlock impossible.</p>
+                    
+                    <h4>1️⃣ Eliminate Mutual Exclusion:</h4>
+                    <p><strong>Approach:</strong> Make resources shareable when possible</p>
+                    <pre class="code-block">
+Examples:
+✅ Read-only files: Multiple processes can read
+✅ Spooling: Print jobs queued, not direct printer access
+❌ Not always possible: Some resources are inherently exclusive
+   (e.g., write access to files, hardware devices)
+                    </pre>
+                    
+                    <h4>2️⃣ Eliminate Hold and Wait:</h4>
+                    <p><strong>Approach:</strong> Require processes to request all resources at once</p>
+                    <pre class="code-block">
+Protocol 1 - All or Nothing:
+Process must request ALL needed resources before starting
+If any resource unavailable, wait without holding any
+
+Process P1:
+request(Scanner, Printer, Disk)  // Request all at once
+if (all_available) {
+    // Use all resources
+    release(Scanner, Printer, Disk)
+}
+
+Disadvantages:
+- Low resource utilization
+- Starvation possible
+- Hard to predict all needed resources
+                    </pre>
+                    
+                    <h4>3️⃣ Eliminate No Preemption:</h4>
+                    <p><strong>Approach:</strong> Allow forcible resource removal</p>
+                    <pre class="code-block">
+Protocol:
+If process P1 holds resources and requests unavailable resource:
+1. Preempt all resources from P1
+2. Add preempted resources to P1's wait list
+3. P1 restarts only when it can get all resources
+
+Example:
+P1 holds Scanner, requests Printer (held by P2)
+→ Preempt Scanner from P1
+→ P1 waits for both Scanner and Printer
+→ When both available, P1 restarts
+
+Works for: CPU, memory pages
+Doesn't work for: Printers, mutex locks
+                    </pre>
+                    
+                    <h4>4️⃣ Eliminate Circular Wait:</h4>
+                    <p><strong>Approach:</strong> Impose total ordering on resource types</p>
+                    <pre class="code-block">
+Resource Ordering Example:
+R1 = Scanner (priority 1)
+R2 = Printer (priority 2)  
+R3 = Disk (priority 3)
+
+Rule: Processes must request resources in increasing order
+
+Correct:
+P1: request(R1), then request(R2), then request(R3)
+
+Incorrect:
+P2: request(R3), then request(R1)  // Violates ordering
+
+Why it works:
+If all processes follow ordering, no cycle can form
+Proof: Assume cycle P1→R_i→P2→R_j→...→P1→R_k
+Since P1 requests R_i and later P1 gets R_k, we need i < k
+But cycle implies k < i (contradiction!)
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">4. Deadlock Avoidance - Banker's Algorithm</div>
+                <div class="detailed-explanation">
+                    <p><strong>Strategy:</strong> Dynamically examine resource allocation to ensure system never enters unsafe state.</p>
+                    
+                    <h4>🏦 Banking Analogy:</h4>
+                    <p>A bank has limited cash but promises to lend money to customers. The bank must ensure it can satisfy all customers' maximum demands, even in worst-case scenario.</p>
+                    
+                    <h4>🔧 Key Concepts:</h4>
+                    <ul>
+                        <li><strong>Safe State:</strong> System can allocate resources to all processes in some order</li>
+                        <li><strong>Unsafe State:</strong> No guarantee that all processes can complete</li>
+                        <li><strong>Safe Sequence:</strong> Order in which processes can complete</li>
+                    </ul>
+                    
+                    <h4>📊 Data Structures:</h4>
+                    <pre class="code-block">
+n = number of processes
+m = number of resource types
+
+Available[m]: Available instances of each resource
+Max[n][m]: Maximum demand of each process  
+Allocation[n][m]: Currently allocated resources
+Need[n][m]: Remaining need = Max - Allocation
+                    </pre>
+                    
+                    <h4>🔍 Safety Algorithm:</h4>
+                    <pre class="code-block">
+1. Initialize Work = Available, Finish[i] = false for all i
+2. Find process Pi such that:
+   - Finish[i] == false
+   - Need[i] <= Work
+3. If found:
+   - Work = Work + Allocation[i]
+   - Finish[i] = true
+   - Go to step 2
+4. If all Finish[i] == true: SAFE
+   Else: UNSAFE
+                    </pre>
+                    
+                    <h4>📋 Complete Example:</h4>
+                    <pre class="code-block">
+3 processes (P0, P1, P2), 3 resource types (A, B, C)
+Total resources: A=10, B=5, C=7
+
+Current state:
+Process | Allocation | Max | Need
+        | A B C      |A B C| A B C
+P0      | 0 1 0      |7 5 3| 7 4 3
+P1      | 2 0 0      |3 2 2| 1 2 2  
+P2      | 3 0 2      |9 0 2| 6 0 0
+
+Available: A=3, B=3, C=2 (Total - Allocated)
+
+Safety Check:
+Work = [3,3,2], Finish = [F,F,F]
+
+Step 1: Check P0: Need[0]=[7,4,3] > Work=[3,3,2] ❌
+Step 2: Check P1: Need[1]=[1,2,2] <= Work=[3,3,2] ✅
+        Work = [3,3,2] + [2,0,0] = [5,3,2]
+        Finish[1] = true
+
+Step 3: Check P0: Need[0]=[7,4,3] > Work=[5,3,2] ❌  
+Step 4: Check P2: Need[2]=[6,0,0] > Work=[5,3,2] ❌
+
+No process can proceed → UNSAFE STATE!
+                    </pre>
+                    
+                    <h4>✅ Resource Request Algorithm:</h4>
+                    <pre class="code-block">
+When process Pi requests Request[m]:
+
+1. Check if Request <= Need[i]
+   If not: Error (requesting more than declared max)
+
+2. Check if Request <= Available  
+   If not: Wait (resources not available)
+
+3. Simulate allocation:
+   Available = Available - Request
+   Allocation[i] = Allocation[i] + Request
+   Need[i] = Need[i] - Request
+
+4. Run safety algorithm
+   If safe: Grant request
+   If unsafe: Rollback and make process wait
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">5. Deadlock Detection and Recovery</div>
+                <div class="detailed-explanation">
+                    <p><strong>Strategy:</strong> Allow deadlocks to occur, detect them, and recover.</p>
+                    
+                    <h4>🔍 Detection Algorithm:</h4>
+                    <pre class="code-block">
+Single Instance Resources:
+- Use Resource Allocation Graph
+- Look for cycles using DFS
+- Cycle = Deadlock
+
+Multiple Instance Resources:
+- Use modified Banker's algorithm
+- Similar to safety algorithm but different logic
+                    </pre>
+                    
+                    <h4>📊 Detection Algorithm (Multiple Instances):</h4>
+                    <pre class="code-block">
+Data structures:
+Available[m]: Available resources
+Allocation[n][m]: Current allocation
+Request[n][m]: Current requests
+
+Algorithm:
+1. Work = Available, Finish[i] = false
+2. Find process Pi such that:
+   - Finish[i] == false  
+   - Request[i] <= Work
+3. If found:
+   - Work = Work + Allocation[i]
+   - Finish[i] = true
+   - Go to step 2
+4. If Finish[i] == false for some i:
+   - Pi is deadlocked
+                    </pre>
+                    
+                    <h4>⏰ When to Run Detection:</h4>
+                    <ul>
+                        <li><strong>Every resource request:</strong> High overhead, immediate detection</li>
+                        <li><strong>Periodically:</strong> Balanced approach</li>
+                        <li><strong>When CPU utilization drops:</strong> Indicates possible deadlock</li>
+                    </ul>
+                    
+                    <h4>🔧 Recovery Methods:</h4>
+                    
+                    <h5>1️⃣ Process Termination:</h5>
+                    <pre class="code-block">
+Option A: Terminate ALL deadlocked processes
+- Simple but expensive
+- All work lost
+
+Option B: Terminate processes one by one
+- Check after each termination if deadlock resolved
+- Less expensive but more complex
+
+Selection criteria for termination:
+- Process priority
+- Computation time used
+- Resources held
+- Resources needed to complete
+- Interactive vs batch process
+                    </pre>
+                    
+                    <h5>2️⃣ Resource Preemption:</h5>
+                    <pre class="code-block">
+Steps:
+1. Select victim process
+2. Rollback process to safe state
+3. Preempt resources from victim
+4. Give resources to other processes
+
+Issues:
+- Starvation: Same process always selected
+- Rollback: How far to rollback?
+- Cost: Overhead of preemption
+
+Solution for starvation:
+Include number of preemptions in selection criteria
+                    </pre>
+                    
+                    <h4>📊 Deadlock Handling Comparison:</h4>
+                    <pre class="code-block">
+Method      | Overhead | Throughput | Response Time
+Prevention  | High     | Low        | High
+Avoidance   | Medium   | Medium     | Medium  
+Detection   | Low      | High       | Low (until deadlock)
+Ignore      | None     | Highest    | Lowest (until deadlock)
+
+Real Systems:
+- Windows: Mostly ignores, some prevention
+- Linux: Mostly ignores, some prevention  
+- Databases: Detection and recovery
+- Real-time: Prevention and avoidance
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">6. Practical Examples and Case Studies</div>
+                <div class="detailed-explanation">
+                    <h4>💻 Database Deadlock Example:</h4>
+                    <pre class="code-block">
+Transaction T1:          Transaction T2:
+BEGIN                    BEGIN
+LOCK TABLE A             LOCK TABLE B
+UPDATE A SET x=1         UPDATE B SET y=2
+LOCK TABLE B ←────────── LOCK TABLE A ← DEADLOCK!
+UPDATE B SET z=3         UPDATE A SET w=4
+COMMIT                   COMMIT
+
+Database Solution:
+- Timeout-based detection
+- Automatic rollback of one transaction
+- Retry mechanism
+                    </pre>
+                    
+                    <h4>🔒 Mutex Deadlock in C++:</h4>
+                    <pre class="code-block">
+// Problematic code
+std::mutex m1, m2;
+
+Thread 1:                Thread 2:
+m1.lock();              m2.lock();
+m2.lock(); // Waits     m1.lock(); // Waits
+// ... work              // ... work
+m2.unlock();            m1.unlock();
+m1.unlock();            m2.unlock();
+
+// Solution: Consistent ordering
+Thread 1:                Thread 2:
+m1.lock();              m1.lock();  // Same order
+m2.lock();              m2.lock();
+// ... work              // ... work  
+m2.unlock();            m2.unlock();
+m1.unlock();            m1.unlock();
+                    </pre>
+                    
+                    <h4>🌐 Distributed System Deadlock:</h4>
+                    <pre class="code-block">
+Node A holds Resource X, requests Resource Y (on Node B)
+Node B holds Resource Y, requests Resource X (on Node A)
+
+Challenges:
+- No global state knowledge
+- Network delays and failures
+- Distributed detection algorithms needed
+
+Solutions:
+- Distributed deadlock detection algorithms
+- Timeout-based approaches
+- Hierarchical resource ordering
+                    </pre>
+                    
+                    <h4>🎯 Best Practices:</h4>
+                    <ul>
+                        <li><strong>Lock Ordering:</strong> Always acquire locks in same order</li>
+                        <li><strong>Timeout:</strong> Use timeouts for lock acquisition</li>
+                        <li><strong>Lock-Free Programming:</strong> Use atomic operations when possible</li>
+                        <li><strong>Minimize Lock Scope:</strong> Hold locks for shortest time possible</li>
+                        <li><strong>Avoid Nested Locks:</strong> Reduce complexity</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -610,77 +1897,819 @@
     <div id="io-filesystem" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('io-filesystem')">&times;</span>
-            <h2>📁 I/O & File Systems</h2>
+            <h2>📁 I/O & File Systems - Complete Guide</h2>
             
             <div class="concept-diagram">
-                <div class="diagram-title">I/O Subsystem Architecture</div>
-                <div class="visual-element">
-                    <div class="process-box">Application</div>
-                    <span class="arrow">↓</span>
-                    <div class="memory-block">System Call Interface</div>
-                    <span class="arrow">↓</span>
-                    <div class="file-block">Device Drivers</div>
-                    <span class="arrow">↓</span>
-                    <div class="queue-item">Hardware</div>
+                <div class="diagram-title">I/O Subsystem Introduction</div>
+                <div class="detailed-explanation">
+                    <p><strong>Purpose:</strong> The I/O subsystem manages communication between the computer and external devices, providing a uniform interface for diverse hardware.</p>
+                    
+                    <h4>🎯 Key Objectives:</h4>
+                    <ul>
+                        <li><strong>Device Independence:</strong> Applications don't need to know hardware details</li>
+                        <li><strong>Uniform Interface:</strong> Consistent API for different devices</li>
+                        <li><strong>Error Handling:</strong> Manage device failures gracefully</li>
+                        <li><strong>Efficiency:</strong> Optimize data transfer and device utilization</li>
+                    </ul>
+                    
+                    <h4>🔧 I/O Device Categories:</h4>
+                    <pre class="code-block">
+Block Devices:
+- Transfer data in fixed-size blocks
+- Examples: Hard disks, SSDs, USB drives
+- Support random access
+- Typical block size: 512 bytes to 4KB
+
+Character Devices:
+- Transfer data as stream of characters
+- Examples: Keyboards, mice, serial ports
+- Sequential access only
+- Variable data rates
+
+Network Devices:
+- Special category for network communication
+- Examples: Ethernet cards, WiFi adapters
+- Packet-based communication
+                    </pre>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">File System Structure</div>
-                <div class="visual-element">
-                    <div class="file-block">Boot Block</div>
-                    <div class="file-block">Super Block</div>
-                    <div class="file-block">Inode Table</div>
-                    <div class="file-block">Data Blocks</div>
-                </div>
-                <div class="algorithm-steps">
-                    <h4>Components:</h4>
-                    <ol>
-                        <li><strong>Boot Block:</strong> Contains boot loader</li>
-                        <li><strong>Super Block:</strong> File system metadata</li>
-                        <li><strong>Inode Table:</strong> File metadata and pointers</li>
-                        <li><strong>Data Blocks:</strong> Actual file content</li>
-                    </ol>
+                <div class="diagram-title">1. I/O Subsystem Architecture</div>
+                <div class="detailed-explanation">
+                    <p><strong>Layered Architecture:</strong> Multiple layers provide abstraction and functionality.</p>
+                    
+                    <h4>🏗️ I/O Software Layers:</h4>
+                    <pre class="code-block">
+┌─────────────────────────┐ ← User Applications
+│    User-Level I/O       │   (printf, scanf, file operations)
+├─────────────────────────┤
+│  Device-Independent     │ ← OS I/O System
+│     Software            │   (buffering, caching, spooling)
+├─────────────────────────┤
+│    Device Drivers       │ ← Hardware-Specific
+│                         │   (device control, status checking)
+├─────────────────────────┤
+│  Interrupt Handlers     │ ← Hardware Interface
+│                         │   (interrupt processing)
+└─────────────────────────┘
+│       Hardware          │ ← Physical Devices
+└─────────────────────────┘
+                    </pre>
+                    
+                    <h4>🔄 I/O Request Flow:</h4>
+                    <pre class="code-block">
+1. Application calls I/O function (e.g., read())
+2. System call interface validates parameters
+3. Device-independent layer handles buffering
+4. Device driver translates to hardware commands
+5. Hardware performs actual I/O operation
+6. Interrupt signals completion
+7. Interrupt handler processes completion
+8. Data/status returned to application
+                    </pre>
+                    
+                    <h4>💾 Buffering Strategies:</h4>
+                    <pre class="code-block">
+No Buffering:
+- Direct transfer between device and user space
+- Simple but inefficient
+- Used for character devices
+
+Single Buffering:
+- One buffer in kernel space
+- Application waits while buffer fills/empties
+- Better than no buffering
+
+Double Buffering:
+- Two buffers alternate roles
+- While one buffer is being filled, other is processed
+- Improves throughput
+
+Circular Buffering:
+- Multiple buffers in circular arrangement
+- Continuous data flow
+- Used for streaming devices
+                    </pre>
+                    
+                    <h4>🖨️ Spooling (Simultaneous Peripheral Operations On-Line):</h4>
+                    <pre class="code-block">
+Problem: Printer can only handle one job at a time
+Solution: Spool jobs to disk, print sequentially
+
+Process:
+1. Application "prints" to spool file on disk
+2. Spooling daemon manages print queue
+3. Jobs printed in order (FIFO typically)
+4. Multiple applications can "print" simultaneously
+
+Benefits:
+- Improved system throughput
+- Better resource utilization
+- Job scheduling flexibility
+
+Example: Print spooling in Windows/Linux
+                    </pre>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">File Allocation Methods</div>
-                <div class="algorithm-steps">
-                    <h4>Contiguous Allocation:</h4>
-                    <ol>
-                        <li>Files stored in consecutive blocks</li>
-                        <li>Fast access but external fragmentation</li>
-                    </ol>
-                    <h4>Linked Allocation:</h4>
-                    <ol>
-                        <li>Files stored as linked list of blocks</li>
-                        <li>No external fragmentation but slow random access</li>
-                    </ol>
-                    <h4>Indexed Allocation:</h4>
-                    <ol>
-                        <li>Index block contains pointers to data blocks</li>
-                        <li>Fast random access, supports large files</li>
-                    </ol>
+                <div class="diagram-title">2. I/O Hardware and Techniques</div>
+                <div class="detailed-explanation">
+                    <h4>🔌 I/O Hardware Components:</h4>
+                    <pre class="code-block">
+Device Controller:
+- Hardware interface between device and computer
+- Contains registers for data, status, control
+- Handles low-level device operations
+
+Device Registers:
+- Data Register: Holds data being transferred
+- Status Register: Shows device state (busy, ready, error)
+- Control Register: Commands to device
+
+Memory-Mapped I/O:
+- Device registers mapped to memory addresses
+- CPU uses regular memory instructions
+- Example: mov [0x3F8], al  ; Write to serial port
+
+Port-Mapped I/O:
+- Separate address space for I/O devices
+- Special I/O instructions (IN, OUT on x86)
+- Example: out 0x3F8, al    ; Write to serial port
+                    </pre>
+                    
+                    <h4>⚡ I/O Techniques:</h4>
+                    
+                    <h5>1️⃣ Programmed I/O (Polling):</h5>
+                    <pre class="code-block">
+Process:
+1. CPU initiates I/O operation
+2. CPU continuously checks device status
+3. When ready, CPU transfers data
+4. Repeat until operation complete
+
+Example Code:
+while (device_status != READY) {
+    // Busy wait - CPU does nothing useful
+}
+transfer_data();
+
+Advantages: Simple, no special hardware needed
+Disadvantages: CPU waste, poor for slow devices
+                    </pre>
+                    
+                    <h5>2️⃣ Interrupt-Driven I/O:</h5>
+                    <pre class="code-block">
+Process:
+1. CPU initiates I/O operation
+2. CPU continues other work
+3. Device sends interrupt when ready
+4. CPU handles interrupt, transfers data
+
+Interrupt Handler:
+save_cpu_state();
+if (device_ready()) {
+    transfer_data();
+    signal_completion();
+}
+restore_cpu_state();
+
+Advantages: CPU not wasted, good responsiveness
+Disadvantages: Interrupt overhead, still CPU involvement
+                    </pre>
+                    
+                    <h5>3️⃣ Direct Memory Access (DMA):</h5>
+                    <pre class="code-block">
+Process:
+1. CPU sets up DMA controller
+   - Source address
+   - Destination address  
+   - Transfer size
+   - Direction (read/write)
+2. DMA controller handles entire transfer
+3. CPU free to do other work
+4. DMA sends interrupt when complete
+
+DMA Setup:
+dma_source = buffer_address;
+dma_dest = device_address;
+dma_count = transfer_size;
+dma_control = START | READ;
+
+Advantages: No CPU involvement during transfer
+Disadvantages: More complex hardware, bus contention
+                    </pre>
                 </div>
             </div>
 
             <div class="concept-diagram">
-                <div class="diagram-title">Directory Structure</div>
-                <div class="visual-element">
-                    <div class="file-block">Root (/)</div>
+                <div class="diagram-title">3. File System Fundamentals</div>
+                <div class="detailed-explanation">
+                    <p><strong>Definition:</strong> A file system provides organized storage and retrieval of data on storage devices.</p>
+                    
+                    <h4>📁 File Concept:</h4>
+                    <pre class="code-block">
+File: Named collection of related information
+- Logical unit of storage
+- Abstraction over physical storage
+- Persistent (survives system shutdown)
+
+File Attributes:
+- Name: Human-readable identifier
+- Type: File format (text, binary, executable)
+- Size: Current file size in bytes
+- Location: Physical location on storage
+- Protection: Access permissions
+- Time stamps: Creation, modification, access
+                    </pre>
+                    
+                    <h4>🔧 File Operations:</h4>
+                    <pre class="code-block">
+Basic Operations:
+1. Create: Allocate space, create directory entry
+2. Open: Prepare file for access, return handle
+3. Read: Transfer data from file to memory
+4. Write: Transfer data from memory to file
+5. Seek: Move file pointer to specific position
+6. Close: Release resources, update metadata
+7. Delete: Remove file and free space
+
+File Descriptor/Handle:
+- Integer representing open file
+- Index into system file table
+- Used in all file operations after open()
+
+Example (C):
+int fd = open("file.txt", O_RDWR);
+read(fd, buffer, 1024);
+write(fd, data, 512);
+close(fd);
+                    </pre>
+                    
+                    <h4>📂 Directory Structure:</h4>
+                    <pre class="code-block">
+Directory: Special file containing list of files
+- Maps file names to file metadata
+- Organizes files hierarchically
+
+Directory Operations:
+- Create directory
+- List directory contents
+- Search for file
+- Rename file
+- Delete directory
+
+Directory Implementation:
+Linear List:
+- Simple array of file entries
+- Sequential search (slow for large directories)
+
+Hash Table:
+- Hash file name to get index
+- Faster search, more complex
+- Collision handling needed
+
+B-Tree:
+- Balanced tree structure
+- Fast search, insertion, deletion
+- Used in modern file systems
+                    </pre>
                 </div>
-                <div class="visual-element">
-                    <div class="file-block">bin</div>
-                    <div class="file-block">usr</div>
-                    <div class="file-block">home</div>
-                    <div class="file-block">etc</div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">4. File System Structure</div>
+                <div class="detailed-explanation">
+                    <p><strong>Layered Design:</strong> File system organized in multiple layers for modularity and efficiency.</p>
+                    
+                    <h4>🏗️ File System Layers:</h4>
+                    <pre class="code-block">
+┌─────────────────────────┐
+│   Application Layer     │ ← User programs
+├─────────────────────────┤
+│   Logical File System   │ ← File operations, directory management
+├─────────────────────────┤
+│  File Organization      │ ← File allocation, free space management
+├─────────────────────────┤
+│   Basic File System     │ ← Block I/O, buffering
+├─────────────────────────┤
+│   I/O Control          │ ← Device drivers
+├─────────────────────────┤
+│      Hardware          │ ← Storage devices
+└─────────────────────────┘
+                    </pre>
+                    
+                    <h4>💾 On-Disk File System Structure:</h4>
+                    <pre class="code-block">
+Typical Disk Layout:
+┌─────────────┬─────────────┬─────────────┬─────────────┐
+│ Boot Block  │ Super Block │ Inode Table │ Data Blocks │
+└─────────────┴─────────────┴─────────────┴─────────────┘
+
+Boot Block (Block 0):
+- Contains boot loader program
+- Loaded by BIOS/UEFI to start OS
+- Usually 512 bytes or 1 sector
+
+Super Block:
+- File system metadata
+- Total blocks, free blocks
+- Inode table size and location
+- Block size, file system type
+- Magic number for identification
+
+Inode Table:
+- Array of inodes (index nodes)
+- Each inode describes one file
+- Contains file metadata and block pointers
+- Fixed size, allocated at format time
+
+Data Blocks:
+- Actual file content
+- Directory data
+- Free space for new files
+                    </pre>
+                    
+                    <h4>📋 Inode Structure (Unix-style):</h4>
+                    <pre class="code-block">
+Inode Contents:
+- File type and permissions (16 bits)
+- Owner user ID (16 bits)
+- Owner group ID (16 bits)  
+- File size (32/64 bits)
+- Time stamps (creation, modification, access)
+- Link count (number of directory entries)
+- Block pointers (direct and indirect)
+
+Block Pointers:
+- 12 direct pointers → point to data blocks
+- 1 single indirect → points to block of pointers
+- 1 double indirect → points to block of single indirect
+- 1 triple indirect → points to block of double indirect
+
+Maximum File Size Calculation:
+Block size = 4KB, Pointer size = 4 bytes
+Direct: 12 × 4KB = 48KB
+Single indirect: (4KB/4) × 4KB = 4MB
+Double indirect: (4KB/4)² × 4KB = 4GB
+Triple indirect: (4KB/4)³ × 4KB = 4TB
+Total: ~4TB maximum file size
+                    </pre>
                 </div>
-                <div class="visual-element">
-                    <div class="file-block">user1</div>
-                    <div class="file-block">user2</div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">5. File Allocation Methods</div>
+                <div class="detailed-explanation">
+                    <p><strong>Problem:</strong> How to allocate disk blocks to files efficiently?</p>
+                    
+                    <h4>1️⃣ Contiguous Allocation:</h4>
+                    <pre class="code-block">
+Concept: Store file in consecutive disk blocks
+
+Directory Entry:
+File Name | Start Block | Length
+file1.txt |     100     |   5
+file2.txt |     105     |   3
+
+Disk Layout:
+[100][101][102][103][104] ← file1.txt
+[105][106][107]           ← file2.txt
+
+Advantages:
+✅ Simple implementation
+✅ Fast sequential access
+✅ Minimal seek time
+✅ Good for read-only files
+
+Disadvantages:
+❌ External fragmentation
+❌ File size must be known in advance
+❌ Difficult to grow files
+❌ Compaction needed periodically
+
+Use Cases:
+- CD-ROMs, DVDs (read-only)
+- Embedded systems with known file sizes
+                    </pre>
+                    
+                    <h4>2️⃣ Linked Allocation:</h4>
+                    <pre class="code-block">
+Concept: File stored as linked list of blocks
+
+Directory Entry:
+File Name | Start Block | End Block
+file1.txt |     100     |    104
+
+Block Structure:
+Block 100: [Data][Pointer to 102]
+Block 102: [Data][Pointer to 107]  
+Block 107: [Data][Pointer to 201]
+Block 201: [Data][NULL]
+
+File Allocation Table (FAT):
+Block | Next Block
+100   |    102
+102   |    107
+107   |    201
+201   |    EOF
+
+Advantages:
+✅ No external fragmentation
+✅ Files can grow dynamically
+✅ No need to declare file size
+
+Disadvantages:
+❌ Poor random access (must follow chain)
+❌ Extra space for pointers
+❌ Reliability issues (broken chain)
+❌ No locality of reference
+
+Improvements:
+- Cluster allocation (group of blocks)
+- File Allocation Table (FAT file system)
+                    </pre>
+                    
+                    <h4>3️⃣ Indexed Allocation:</h4>
+                    <pre class="code-block">
+Concept: Index block contains pointers to data blocks
+
+Directory Entry:
+File Name | Index Block
+file1.txt |     200
+
+Index Block 200:
+[Pointer to 100]
+[Pointer to 102]
+[Pointer to 107]
+[Pointer to 201]
+[NULL]
+[NULL]
+...
+
+Data Blocks:
+Block 100: [File Data]
+Block 102: [File Data]
+Block 107: [File Data]
+Block 201: [File Data]
+
+Advantages:
+✅ Fast random access
+✅ No external fragmentation
+✅ Dynamic file growth
+✅ Easy to find free blocks
+
+Disadvantages:
+❌ Index block overhead
+❌ Small files waste space
+❌ Large files need multiple index blocks
+
+Multi-level Indexing:
+- Single indirect: Index block points to data
+- Double indirect: Index block points to index blocks
+- Triple indirect: Three levels of indirection
+- Used in Unix inode system
+                    </pre>
+                    
+                    <h4>📊 Allocation Method Comparison:</h4>
+                    <pre class="code-block">
+Method      | Sequential | Random | Fragmentation | Growth
+Contiguous  |   Fast     |  Fast  |     High      |  Poor
+Linked      |   Good     |  Slow  |     None      |  Good
+Indexed     |   Good     |  Fast  |     Low       |  Good
+
+Real-World Usage:
+- FAT32: Modified linked allocation
+- NTFS: Indexed allocation with extents
+- ext4: Indexed allocation with extents
+- ZFS: Copy-on-write with dynamic allocation
+                    </pre>
                 </div>
-                <p><strong>Hierarchical Structure:</strong> Tree-like organization with root directory and subdirectories</p>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">6. Free Space Management</div>
+                <div class="detailed-explanation">
+                    <p><strong>Problem:</strong> How to keep track of free disk blocks efficiently?</p>
+                    
+                    <h4>1️⃣ Bit Vector (Bitmap):</h4>
+                    <pre class="code-block">
+Concept: One bit per block (0=free, 1=allocated)
+
+Example (16 blocks):
+Blocks: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+Bitmap: 1 1 1 0 0 1 1 0 0 0  1  0  0  1  1  1
+
+Free blocks: 3, 4, 7, 8, 9, 11, 12
+
+Finding Free Block:
+for (i = 0; i < total_blocks; i++) {
+    if (bitmap[i/8] & (1 << (i%8)) == 0) {
+        return i;  // Found free block
+    }
+}
+
+Advantages:
+✅ Simple and efficient
+✅ Easy to find contiguous free blocks
+✅ Compact representation
+
+Disadvantages:
+❌ Bitmap size grows with disk size
+❌ Must be kept in memory for efficiency
+❌ Bit manipulation overhead
+
+Space Overhead:
+1TB disk, 4KB blocks = 256M blocks
+Bitmap size = 256M bits = 32MB
+                    </pre>
+                    
+                    <h4>2️⃣ Linked List:</h4>
+                    <pre class="code-block">
+Concept: Link all free blocks together
+
+Free List Head: Block 100
+
+Block 100: [Pointer to 102][Free Space]
+Block 102: [Pointer to 107][Free Space]
+Block 107: [Pointer to 201][Free Space]
+Block 201: [NULL][Free Space]
+
+Allocation:
+1. Remove first block from free list
+2. Update free list head
+3. Return block to requester
+
+Deallocation:
+1. Add block to front of free list
+2. Update pointers
+
+Advantages:
+✅ No space wasted on bitmap
+✅ Works well when disk nearly full
+
+Disadvantages:
+❌ Cannot find contiguous blocks easily
+❌ Disk I/O needed to traverse list
+❌ No random access to free blocks
+                    </pre>
+                    
+                    <h4>3️⃣ Grouping:</h4>
+                    <pre class="code-block">
+Concept: Store addresses of free blocks in free blocks
+
+First Free Block contains:
+- Addresses of n-1 free blocks
+- Address of next group block
+
+Example:
+Block 100: [102, 107, 201, 205, 300] ← 4 free blocks + next group
+Block 300: [301, 305, 310, 315, 400] ← 4 free blocks + next group
+Block 400: [401, 405, 410, 415, NULL] ← 4 free blocks + end
+
+Advantages:
+✅ Fast allocation of multiple blocks
+✅ Reduces disk I/O
+✅ Good for large file allocation
+
+Disadvantages:
+❌ Complex implementation
+❌ Fragmentation of free space info
+                    </pre>
+                    
+                    <h4>4️⃣ Counting:</h4>
+                    <pre class="code-block">
+Concept: Store address and count of contiguous free blocks
+
+Free Space Table:
+Start Block | Count
+    100     |   5    ← Blocks 100-104 free
+    200     |   3    ← Blocks 200-202 free
+    500     |   10   ← Blocks 500-509 free
+
+Allocation Algorithm:
+1. Find entry with sufficient count
+2. Allocate from beginning of range
+3. Update count and start address
+4. Remove entry if count becomes 0
+
+Advantages:
+✅ Efficient for contiguous allocation
+✅ Compact representation
+✅ Fast allocation of large files
+
+Disadvantages:
+❌ Complex when blocks scattered
+❌ Fragmentation reduces efficiency
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">7. File System Performance and Reliability</div>
+                <div class="detailed-explanation">
+                    <h4>⚡ Performance Optimization:</h4>
+                    
+                    <h5>1️⃣ Caching:</h5>
+                    <pre class="code-block">
+Buffer Cache:
+- Keep frequently used blocks in memory
+- Reduce disk I/O operations
+- LRU replacement policy
+
+Directory Caching:
+- Cache directory entries
+- Speed up file name lookups
+- Reduce directory traversal time
+
+Metadata Caching:
+- Cache inodes and file attributes
+- Avoid repeated disk reads
+- Update cache on modifications
+                    </pre>
+                    
+                    <h5>2️⃣ Read-Ahead:</h5>
+                    <pre class="code-block">
+Sequential Read-Ahead:
+- Predict next blocks to be read
+- Pre-load blocks into cache
+- Improve sequential access performance
+
+Example:
+Application reads block 100
+System pre-loads blocks 101, 102, 103
+Next read hits cache instead of disk
+                    </pre>
+                    
+                    <h5>3️⃣ Write Optimization:</h5>
+                    <pre class="code-block">
+Write-Back Caching:
+- Buffer writes in memory
+- Write to disk later (lazy writing)
+- Combine multiple writes to same block
+
+Write-Through Caching:
+- Write to disk immediately
+- Slower but more reliable
+- Used for critical data
+
+Journaling:
+- Log changes before applying them
+- Enables fast recovery after crash
+- Used in ext3, ext4, NTFS
+                    </pre>
+                    
+                    <h4>🛡️ Reliability and Recovery:</h4>
+                    
+                    <h5>1️⃣ File System Consistency:</h5>
+                    <pre class="code-block">
+Consistency Problems:
+- System crash during file operation
+- Inconsistent metadata (inodes, free lists)
+- Lost blocks, duplicate allocation
+
+File System Check (fsck):
+1. Check superblock for reasonableness
+2. Check free block list consistency
+3. Check inode consistency
+4. Check directory structure
+5. Fix inconsistencies found
+
+Example Inconsistencies:
+- Block marked free but allocated to file
+- Inode link count doesn't match directory entries
+- Directory points to invalid inode
+                    </pre>
+                    
+                    <h5>2️⃣ Journaling File Systems:</h5>
+                    <pre class="code-block">
+Journal Structure:
+┌─────────────┬─────────────┬─────────────┐
+│   Journal   │ Superblock  │ Data Blocks │
+└─────────────┴─────────────┴─────────────┘
+
+Write Process:
+1. Write operation details to journal
+2. Mark journal entry as complete
+3. Apply changes to actual file system
+4. Mark journal entry as applied
+5. Remove journal entry
+
+Recovery Process:
+1. Check journal for incomplete operations
+2. Replay completed but unapplied operations
+3. Discard incomplete operations
+4. File system is consistent
+
+Types of Journaling:
+- Metadata only: Journal metadata changes
+- Full journaling: Journal data and metadata
+- Ordered: Write data before metadata
+                    </pre>
+                    
+                    <h4>🔒 File System Security:</h4>
+                    <pre class="code-block">
+Access Control:
+- User/Group/Other permissions
+- Read/Write/Execute bits
+- Access Control Lists (ACLs)
+
+Example (Unix permissions):
+-rwxr-xr--  1 user group 1024 Jan 1 12:00 file.txt
+│││││││││
+│││││││└─ Other: read
+│││││└──── Other: no write
+││││└───── Other: no execute
+│││└────── Group: read
+││└─────── Group: no write
+│└──────── Group: execute
+└───────── User: read, write, execute
+
+Encryption:
+- File-level encryption
+- File system-level encryption
+- Full disk encryption
+- Key management
+                    </pre>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">8. Modern File Systems</div>
+                <div class="detailed-explanation">
+                    <h4>🔄 Copy-on-Write File Systems:</h4>
+                    <pre class="code-block">
+ZFS (Zettabyte File System):
+- Never overwrites data in place
+- Creates new copy when modifying
+- Atomic transactions
+- Built-in compression and deduplication
+- Snapshots and clones
+
+BTRFS (B-tree File System):
+- Copy-on-write semantics
+- Subvolumes and snapshots
+- Built-in RAID support
+- Online defragmentation
+- Checksumming for data integrity
+                    </pre>
+                    
+                    <h4>📱 Flash-Based File Systems:</h4>
+                    <pre class="code-block">
+SSD Characteristics:
+- No mechanical parts (no seek time)
+- Limited write/erase cycles
+- Wear leveling needed
+- Different performance for read/write
+
+TRIM Command:
+- Tells SSD which blocks are no longer used
+- Enables garbage collection
+- Improves performance and lifespan
+
+F2FS (Flash-Friendly File System):
+- Designed specifically for flash storage
+- Log-structured approach
+- Efficient garbage collection
+- Wear leveling support
+                    </pre>
+                    
+                    <h4>☁️ Distributed File Systems:</h4>
+                    <pre class="code-block">
+Network File System (NFS):
+- Access remote files over network
+- Transparent to applications
+- Stateless protocol
+- Caching for performance
+
+Google File System (GFS):
+- Designed for large distributed systems
+- Handles component failures gracefully
+- Optimized for large files
+- Master-slave architecture
+
+Hadoop Distributed File System (HDFS):
+- Designed for big data processing
+- High fault tolerance
+- Optimized for streaming access
+- Write-once, read-many model
+                    </pre>
+                    
+                    <h4>📊 File System Comparison:</h4>
+                    <pre class="code-block">
+File System | Max File Size | Max Volume | Features
+FAT32       |     4GB       |    2TB     | Simple, compatible
+NTFS        |    16TB       |   256TB    | Journaling, compression
+ext4        |    16TB       |    1EB     | Journaling, extents
+ZFS         |    16EB       |   256ZB    | COW, snapshots, RAID
+BTRFS       |    16EB       |   16EB     | COW, subvolumes
+APFS        |     8EB       |    8EB     | COW, encryption, clones
+
+EB = Exabyte (10^18 bytes)
+ZB = Zettabyte (10^21 bytes)
+                    </pre>
+                </div>
             </div>
         </div>
     </div>
