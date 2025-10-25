@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating Systems Concepts - Visual Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .category-card h3 {
+            color: #4a5568;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            color: #666;
+            transition: color 0.2s ease;
+        }
+
+        .topic-list li:hover {
+            color: #4299e1;
+        }
+
+        .topic-list li:last-child {
+            border-bottom: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .concept-diagram {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #4299e1;
+        }
+
+        .diagram-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .visual-element {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .process-box, .memory-block, .queue-item, .file-block {
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 80px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .process-box {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .memory-block {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+
+        .queue-item {
+            background: linear-gradient(135deg, #45b7d1, #96c93d);
+            color: white;
+        }
+
+        .file-block {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .algorithm-steps {
+            background: #e6fffa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .algorithm-steps h4 {
+            color: #2c7a7b;
+            margin-bottom: 10px;
+        }
+
+        .algorithm-steps ol {
+            margin-left: 20px;
+        }
+
+        .algorithm-steps li {
+            margin: 5px 0;
+            color: #2d3748;
+        }
+
+        .timeline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            padding: 10px;
+        }
+
+        .time-slot {
+            min-width: 60px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Operating Systems Concepts</h1>
+            <p>Interactive Visual Guide to Core OS Topics</p>
+        </div>
+
+        <div class="categories">
+            <div class="category-card" onclick="openModal('process-management')">
+                <h3><span class="category-icon">⚙️</span>Process Management</h3>
+                <ul class="topic-list">
+                    <li>Process Concept</li>
+                    <li>System Call</li>
+                    <li>Inter Process Communication</li>
+                    <li>Multi Threading</li>
+                </ul>
+            </div>
+
+            <div class="category-card" onclick="openModal('cpu-scheduling')">
+                <h3><span class="category-icon">📊</span>CPU Scheduling</h3>
+                <ul class="topic-list">
+                    <li>FCFS Scheduling</li>
+                    <li>SJF & SRTF Scheduling</li>
+                    <li>Round Robin Scheduling</li>
+                    <li>Priority Scheduling</li>
+                    <li>Multi Level Queue</li>
+                </ul>
+            </div>
+
+            <div class="category-card" onclick="openModal('memory-management')">
+                <h3><span class="category-icon">💾</span>Memory Management</h3>
+                <ul class="topic-list">
+                    <li>Memory Allocation</li>
+                    <li>Paging & Segmentation</li>
+                    <li>Virtual Memory</li>
+                    <li>Page Replacement</li>
+                </ul>
+            </div>
+
+            <div class="category-card" onclick="openModal('deadlock')">
+                <h3><span class="category-icon">🔒</span>Deadlock Management</h3>
+                <ul class="topic-list">
+                    <li>Deadlock Introduction</li>
+                    <li>Deadlock Conditions</li>
+                    <li>Prevention & Avoidance</li>
+                    <li>Detection & Recovery</li>
+                </ul>
+            </div>
+
+            <div class="category-card" onclick="openModal('io-filesystem')">
+                <h3><span class="category-icon">📁</span>I/O & File Systems</h3>
+                <ul class="topic-list">
+                    <li>I/O Subsystem</li>
+                    <li>File System Structure</li>
+                    <li>File Allocation Methods</li>
+                    <li>Directory Structure</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals for each category -->
+    <div id="process-management" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('process-management')">&times;</span>
+            <h2>⚙️ Process Management</h2>
+            
+            <div class="concept-diagram">
+                <div class="diagram-title">Process Concept</div>
+                <div class="visual-element">
+                    <div class="process-box">Program</div>
+                    <span class="arrow">→</span>
+                    <div class="process-box">Process</div>
+                    <span class="arrow">→</span>
+                    <div class="process-box">Execution</div>
+                </div>
+                <p><strong>Process:</strong> A program in execution with its own memory space, registers, and program counter.</p>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Process States</div>
+                <div class="visual-element">
+                    <div class="process-box" style="background: #28a745;">New</div>
+                    <span class="arrow">→</span>
+                    <div class="process-box" style="background: #ffc107;">Ready</div>
+                    <span class="arrow">→</span>
+                    <div class="process-box" style="background: #dc3545;">Running</div>
+                    <span class="arrow">→</span>
+                    <div class="process-box" style="background: #6c757d;">Terminated</div>
+                </div>
+                <div class="visual-element">
+                    <div class="process-box" style="background: #17a2b8;">Waiting/Blocked</div>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">System Calls</div>
+                <div class="algorithm-steps">
+                    <h4>Types of System Calls:</h4>
+                    <ol>
+                        <li><strong>Process Control:</strong> fork(), exec(), wait(), exit()</li>
+                        <li><strong>File Management:</strong> open(), read(), write(), close()</li>
+                        <li><strong>Device Management:</strong> ioctl(), read(), write()</li>
+                        <li><strong>Information Maintenance:</strong> getpid(), alarm(), sleep()</li>
+                        <li><strong>Communication:</strong> pipe(), shmget(), mmap()</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Inter Process Communication (IPC)</div>
+                <div class="visual-element">
+                    <div class="process-box">Process A</div>
+                    <span class="arrow">⟷</span>
+                    <div class="memory-block">Shared Memory</div>
+                    <span class="arrow">⟷</span>
+                    <div class="process-box">Process B</div>
+                </div>
+                <div class="visual-element">
+                    <div class="process-box">Process C</div>
+                    <span class="arrow">→</span>
+                    <div class="file-block">Message Queue</div>
+                    <span class="arrow">→</span>
+                    <div class="process-box">Process D</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cpu-scheduling" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cpu-scheduling')">&times;</span>
+            <h2>📊 CPU Scheduling Algorithms</h2>
+            
+            <div class="concept-diagram">
+                <div class="diagram-title">First Come First Serve (FCFS)</div>
+                <div class="algorithm-steps">
+                    <h4>Algorithm:</h4>
+                    <ol>
+                        <li>Processes are executed in the order they arrive</li>
+                        <li>Non-preemptive scheduling</li>
+                        <li>Simple but can cause convoy effect</li>
+                    </ol>
+                </div>
+                <div class="timeline">
+                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
+                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
+                    <div class="time-slot" style="background: #4ecdc4;">P2</div>
+                    <div class="time-slot" style="background: #45b7d1;">P3</div>
+                    <div class="time-slot" style="background: #45b7d1;">P3</div>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Shortest Job First (SJF)</div>
+                <div class="algorithm-steps">
+                    <h4>Algorithm:</h4>
+                    <ol>
+                        <li>Select process with shortest burst time</li>
+                        <li>Optimal for average waiting time</li>
+                        <li>Can be preemptive (SRTF) or non-preemptive</li>
+                    </ol>
+                </div>
+                <div class="timeline">
+                    <div class="time-slot" style="background: #4ecdc4;">P2</div>
+                    <div class="time-slot" style="background: #45b7d1;">P3</div>
+                    <div class="time-slot" style="background: #45b7d1;">P3</div>
+                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
+                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Round Robin (RR)</div>
+                <div class="algorithm-steps">
+                    <h4>Algorithm:</h4>
+                    <ol>
+                        <li>Each process gets a fixed time quantum</li>
+                        <li>Preemptive scheduling</li>
+                        <li>Fair allocation of CPU time</li>
+                        <li>Time quantum affects performance</li>
+                    </ol>
+                </div>
+                <div class="timeline">
+                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
+                    <div class="time-slot" style="background: #4ecdc4;">P2</div>
+                    <div class="time-slot" style="background: #45b7d1;">P3</div>
+                    <div class="time-slot" style="background: #ff6b6b;">P1</div>
+                    <div class="time-slot" style="background: #45b7d1;">P3</div>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Priority Scheduling</div>
+                <div class="visual-element">
+                    <div class="queue-item" style="background: #dc3545;">High Priority</div>
+                    <div class="queue-item" style="background: #ffc107;">Medium Priority</div>
+                    <div class="queue-item" style="background: #28a745;">Low Priority</div>
+                </div>
+                <div class="algorithm-steps">
+                    <h4>Types:</h4>
+                    <ol>
+                        <li><strong>Preemptive:</strong> Higher priority process can interrupt</li>
+                        <li><strong>Non-preemptive:</strong> Process runs to completion</li>
+                        <li><strong>Problem:</strong> Starvation of low priority processes</li>
+                        <li><strong>Solution:</strong> Aging technique</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="memory-management" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('memory-management')">&times;</span>
+            <h2>💾 Memory Management</h2>
+            
+            <div class="concept-diagram">
+                <div class="diagram-title">Memory Allocation Strategies</div>
+                <div class="visual-element">
+                    <div class="memory-block">First Fit</div>
+                    <div class="memory-block">Best Fit</div>
+                    <div class="memory-block">Worst Fit</div>
+                </div>
+                <div class="algorithm-steps">
+                    <h4>Allocation Methods:</h4>
+                    <ol>
+                        <li><strong>First Fit:</strong> Allocate first available block</li>
+                        <li><strong>Best Fit:</strong> Allocate smallest suitable block</li>
+                        <li><strong>Worst Fit:</strong> Allocate largest available block</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Paging System</div>
+                <div class="visual-element">
+                    <div class="memory-block">Page 0</div>
+                    <div class="memory-block">Page 1</div>
+                    <div class="memory-block">Page 2</div>
+                    <div class="memory-block">Page 3</div>
+                </div>
+                <span class="arrow">↓</span>
+                <div class="visual-element">
+                    <div class="memory-block">Frame 2</div>
+                    <div class="memory-block">Frame 0</div>
+                    <div class="memory-block">Frame 3</div>
+                    <div class="memory-block">Frame 1</div>
+                </div>
+                <p><strong>Paging:</strong> Divides memory into fixed-size blocks (pages/frames) to eliminate external fragmentation.</p>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Virtual Memory</div>
+                <div class="algorithm-steps">
+                    <h4>Key Concepts:</h4>
+                    <ol>
+                        <li><strong>Demand Paging:</strong> Load pages only when needed</li>
+                        <li><strong>Page Fault:</strong> Occurs when accessing non-resident page</li>
+                        <li><strong>Page Replacement:</strong> Remove pages when memory is full</li>
+                        <li><strong>Thrashing:</strong> Excessive paging activity</li>
+                    </ol>
+                </div>
+                <div class="visual-element">
+                    <div class="memory-block">Virtual Address Space</div>
+                    <span class="arrow">→</span>
+                    <div class="memory-block">Physical Memory</div>
+                    <span class="arrow">→</span>
+                    <div class="memory-block">Secondary Storage</div>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Page Replacement Algorithms</div>
+                <div class="algorithm-steps">
+                    <h4>Common Algorithms:</h4>
+                    <ol>
+                        <li><strong>FIFO:</strong> Replace oldest page</li>
+                        <li><strong>LRU:</strong> Replace least recently used page</li>
+                        <li><strong>Optimal:</strong> Replace page not used for longest time</li>
+                        <li><strong>Clock:</strong> Circular buffer with reference bits</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deadlock" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('deadlock')">&times;</span>
+            <h2>🔒 Deadlock Management</h2>
+            
+            <div class="concept-diagram">
+                <div class="diagram-title">Deadlock Conditions (Coffman Conditions)</div>
+                <div class="algorithm-steps">
+                    <h4>Four Necessary Conditions:</h4>
+                    <ol>
+                        <li><strong>Mutual Exclusion:</strong> Resources cannot be shared</li>
+                        <li><strong>Hold and Wait:</strong> Process holds resources while waiting</li>
+                        <li><strong>No Preemption:</strong> Resources cannot be forcibly taken</li>
+                        <li><strong>Circular Wait:</strong> Circular chain of waiting processes</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Deadlock Example</div>
+                <div class="visual-element">
+                    <div class="process-box">Process P1</div>
+                    <span class="arrow">→</span>
+                    <div class="memory-block">Resource R2</div>
+                </div>
+                <div class="visual-element">
+                    <div class="process-box">Process P2</div>
+                    <span class="arrow">→</span>
+                    <div class="memory-block">Resource R1</div>
+                </div>
+                <div class="visual-element">
+                    <div class="memory-block">R1 held by P1</div>
+                    <div class="memory-block">R2 held by P2</div>
+                </div>
+                <p><strong>Circular Wait:</strong> P1 waits for R2 (held by P2), P2 waits for R1 (held by P1)</p>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Deadlock Handling Strategies</div>
+                <div class="algorithm-steps">
+                    <h4>Prevention:</h4>
+                    <ol>
+                        <li>Eliminate one of the four conditions</li>
+                        <li>Resource ordering to prevent circular wait</li>
+                        <li>Banker's algorithm for safe allocation</li>
+                    </ol>
+                    <h4>Detection & Recovery:</h4>
+                    <ol>
+                        <li>Use resource allocation graph</li>
+                        <li>Process termination</li>
+                        <li>Resource preemption</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Banker's Algorithm</div>
+                <div class="algorithm-steps">
+                    <h4>Safe State Algorithm:</h4>
+                    <ol>
+                        <li>Check if system is in safe state</li>
+                        <li>Find process that can complete with available resources</li>
+                        <li>Assume it completes and releases resources</li>
+                        <li>Repeat until all processes complete</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="io-filesystem" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('io-filesystem')">&times;</span>
+            <h2>📁 I/O & File Systems</h2>
+            
+            <div class="concept-diagram">
+                <div class="diagram-title">I/O Subsystem Architecture</div>
+                <div class="visual-element">
+                    <div class="process-box">Application</div>
+                    <span class="arrow">↓</span>
+                    <div class="memory-block">System Call Interface</div>
+                    <span class="arrow">↓</span>
+                    <div class="file-block">Device Drivers</div>
+                    <span class="arrow">↓</span>
+                    <div class="queue-item">Hardware</div>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">File System Structure</div>
+                <div class="visual-element">
+                    <div class="file-block">Boot Block</div>
+                    <div class="file-block">Super Block</div>
+                    <div class="file-block">Inode Table</div>
+                    <div class="file-block">Data Blocks</div>
+                </div>
+                <div class="algorithm-steps">
+                    <h4>Components:</h4>
+                    <ol>
+                        <li><strong>Boot Block:</strong> Contains boot loader</li>
+                        <li><strong>Super Block:</strong> File system metadata</li>
+                        <li><strong>Inode Table:</strong> File metadata and pointers</li>
+                        <li><strong>Data Blocks:</strong> Actual file content</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">File Allocation Methods</div>
+                <div class="algorithm-steps">
+                    <h4>Contiguous Allocation:</h4>
+                    <ol>
+                        <li>Files stored in consecutive blocks</li>
+                        <li>Fast access but external fragmentation</li>
+                    </ol>
+                    <h4>Linked Allocation:</h4>
+                    <ol>
+                        <li>Files stored as linked list of blocks</li>
+                        <li>No external fragmentation but slow random access</li>
+                    </ol>
+                    <h4>Indexed Allocation:</h4>
+                    <ol>
+                        <li>Index block contains pointers to data blocks</li>
+                        <li>Fast random access, supports large files</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="concept-diagram">
+                <div class="diagram-title">Directory Structure</div>
+                <div class="visual-element">
+                    <div class="file-block">Root (/)</div>
+                </div>
+                <div class="visual-element">
+                    <div class="file-block">bin</div>
+                    <div class="file-block">usr</div>
+                    <div class="file-block">home</div>
+                    <div class="file-block">etc</div>
+                </div>
+                <div class="visual-element">
+                    <div class="file-block">user1</div>
+                    <div class="file-block">user2</div>
+                </div>
+                <p><strong>Hierarchical Structure:</strong> Tree-like organization with root directory and subdirectories</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+
+        // Add smooth scrolling for modal content
+        document.querySelectorAll('.modal-content').forEach(content => {
+            content.style.scrollBehavior = 'smooth';
+        });
+    </script>
+</body>
+</html>
